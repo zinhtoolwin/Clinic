@@ -10,6 +10,7 @@ namespace ClinicSystem.Models
     public class VitalSign
     {
         [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [ForeignKey("Patient")]

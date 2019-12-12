@@ -22,7 +22,7 @@ namespace ClinicSystem.Controllers
         // GET: Appointments
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Appointments.Include(a => a.Patient).Include(a => a.Schedule).ThenInclude(c=>c.Doctor);
+            var applicationDbContext = _context.Appointments.Include(a => a.Patient).Include(a => a.Schedule).ThenInclude(c => c.Doctor).ThenInclude(d => d.Speciality);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -49,8 +49,8 @@ namespace ClinicSystem.Controllers
         // GET: Appointments/Create
         public IActionResult Create()
         {
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id");
-            ViewData["ScheduleId"] = new SelectList(_context.Schedules, "Id", "Id");
+            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name");
+            ViewData["ScheduleId"] = new SelectList(_context.Schedules, "Id", "Day");
             return View();
         }
 

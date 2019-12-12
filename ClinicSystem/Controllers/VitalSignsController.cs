@@ -46,10 +46,27 @@ namespace ClinicSystem.Controllers
         }
 
         // GET: VitalSigns/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync(int? Id)
         {
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id");
+            if (Id == null)
+            {
+                return NotFound();
+            }
+
+            var patient = await _context.Patients.FindAsync(Id);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name", patient.Id);
             return View();
+            //ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id");
+            //return View();
+
+
+
+            //ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name");
+            //return View();
         }
 
         // POST: VitalSigns/Create
@@ -57,8 +74,9 @@ namespace ClinicSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PatientId,Height,Weight,Temperature,BloodSugar,BloodPressureUNo,BloodPressureLNo")] VitalSign vitalSign)
+        public async Task<IActionResult> Create([Bind("PatientId,Height,Weight,Temperature,BloodSugar,BloodPressureUNo,BloodPressureLNo")] VitalSign vitalSign)
         {
+            
             if (ModelState.IsValid)
             {
                 _context.Add(vitalSign);
