@@ -23,6 +23,6 @@ namespace ClinicSystem.Models
         [DataType(DataType.Time)]
         public DateTime ToTime { get; set; }
 
-        public ICollection<Appointment> Appointments { get; set; }
+       public ICollection<Appointment> Appointments { get; set; }
     }
 }

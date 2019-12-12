@@ -4,14 +4,16 @@ using ClinicSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ClinicSystem.Data.Migrations
+namespace ClinicSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191212043317_test1")]
+    partial class test1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,25 +28,23 @@ namespace ClinicSystem.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DoctorId")
+                    b.Property<int>("PatientId")
                         .HasColumnType("int");
 
                     b.Property<int>("ScheduleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SpecialityId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("TreatementDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId");
+                    b.HasIndex("PatientId");
 
                     b.HasIndex("ScheduleId");
-
-                    b.HasIndex("SpecialityId");
 
                     b.ToTable("Appointments");
                 });
@@ -404,21 +404,15 @@ namespace ClinicSystem.Data.Migrations
 
             modelBuilder.Entity("ClinicSystem.Models.Appointment", b =>
                 {
-                    b.HasOne("ClinicSystem.Models.Doctor", "Doctor")
+                    b.HasOne("ClinicSystem.Models.Patient", "Patient")
                         .WithMany("Appointments")
-                        .HasForeignKey("DoctorId")
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ClinicSystem.Models.Schedule", "Schedule")
                         .WithMany("Appointments")
                         .HasForeignKey("ScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ClinicSystem.Models.Speciality", "Speciality")
-                        .WithMany("Appointments")
-                        .HasForeignKey("SpecialityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

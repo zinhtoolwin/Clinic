@@ -14,6 +14,6 @@ namespace ClinicSystem.Models
         
         public ICollection<Doctor> Doctors { get; set; }
 
-        public ICollection<Appointment> Appointments { get; set; }
+        
     }
 }

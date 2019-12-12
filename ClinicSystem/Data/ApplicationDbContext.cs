@@ -30,23 +30,19 @@ namespace ClinicSystem.Data
                 .HasOne<Doctor>(d => d.Doctor)
                 .WithMany(m => m.Schedules)
                 .HasForeignKey(s => s.DoctorId);
-            
+
 
             //appointment
             builder.Entity<Appointment>()
-               .HasOne<Speciality>(d => d.Speciality)
-               .WithMany(m => m.Appointments)
-               .HasForeignKey(s => s.SpecialityId);
+                .HasOne<Patient>(a => a.Patient)
+                .WithMany(b => b.Appointments)
+                .HasForeignKey(c => c.PatientId);
 
             builder.Entity<Appointment>()
-               .HasOne<Doctor>(d => d.Doctor)
-               .WithMany(m => m.Appointments)
-               .HasForeignKey(s => s.DoctorId);
-
-            builder.Entity<Appointment>()
-               .HasOne<Schedule>(d => d.Schedule)
-               .WithMany(m => m.Appointments)
-               .HasForeignKey(s => s.ScheduleId);
+                .HasOne<Schedule>(a => a.Schedule)
+                .WithMany(b => b.Appointments)
+                .HasForeignKey(v => v.ScheduleId);
+               
 
 
 
