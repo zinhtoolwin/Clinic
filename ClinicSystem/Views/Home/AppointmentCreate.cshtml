@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewData["Title"] = "AppointmentCreate";
+}
+
+<h1>AppointmentCreate</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div>
+                <label class="form-group col-sm-4">Patient Name</label>
+                <select class="form-group col-sm-8" id="patientName">
+                    <option value="0">Select Patient</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="form-group col-sm-4">Speciality</label>
+                <select class="form-group col-sm-8" id="special">
+                    <option value="0">Select Speciality</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="form-group col-sm-4">Doctor</label>
+                <select class="form-group col-sm-8" id="doctor">
+                    <option value="0">Select Doctor</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="form-group col-sm-4">Schedule Day</label>
+                <select class="form-group col-sm-8" id="day">
+                    <option value="0">Select Schedule Day Part</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="form-group col-sm-4">Appointment Date</label>
+                <input type="date" id="appointmentDate" class="form-group col-sm-8" />
+            </div>
+
+            <div>
+                <label class="form-group col-sm-4">Treatement Date</label>
+                <input type="date" id="treatementDate" class="form-group col-sm-8" />
+            </div>
+            
+            <div>
+                <input type="button" id="addAppointment" class="btn btn-pinterest" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            callPatient();
+            callSpecial();
+
+
+        });
+        function callPatient() {
+
+            $.ajax({
+                type: 'GET',
+                url: '/api/Appointments1/getPatient',
+                success: function (result) {
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#patientName").append("<option value=" + value.id + ">" + value.name + "</option>");
+                    });
+
+                }
+            });
+
+         
+
+        }
+
+        function callSpecial() {
+
+            $.ajax({
+                type: 'GET',
+                url: '/api/Appointments1/getSpecialities',
+                success: function (result) {
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#special").append("<option value=" + value.id + ">" + value.name + "</option>");
+                    });
+
+                }
+            });
+
+        }
+
+
+    </script>
+}

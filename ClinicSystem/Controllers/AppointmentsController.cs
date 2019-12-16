@@ -51,6 +51,10 @@ namespace ClinicSystem.Controllers
         {
             ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name");
             ViewData["ScheduleId"] = new SelectList(_context.Schedules, "Id", "Day");
+
+            ViewData["SpecialId"] = new SelectList(_context.Specialities, "Id", "Name");
+            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name");
+
             return View();
         }
 
