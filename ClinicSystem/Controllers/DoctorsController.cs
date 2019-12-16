@@ -22,10 +22,14 @@ namespace ClinicSystem.Controllers
         }
 
         // GET: Doctors
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var applicationDbContext = _context.Doctors.Include(d => d.Speciality);
-            return View(await applicationDbContext.ToListAsync());
+            var doctor = from m in _context.Doctors select m;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                doctor = doctor.Where(s => s.Name.Contains(searchString));
+            }
+            return View(await doctor.ToListAsync());
         }
 
         // GET: Doctors/Details/5

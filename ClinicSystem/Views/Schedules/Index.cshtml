@@ -9,6 +9,12 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form asp-controller="Schedules" asp-action="Index">
+    <p>
+        Day Part:<input type="text" class="form-group" name="searchString" />
+        <input type="submit" class="btn btn-secondary" value="Search Day" />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
