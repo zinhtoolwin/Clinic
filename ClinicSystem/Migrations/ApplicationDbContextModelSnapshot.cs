@@ -91,38 +91,6 @@ namespace ClinicSystem.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("ClinicSystem.Models.DoctorTreatment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PatientId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SchdeduleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpecialityId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("PatientId");
-
-                    b.HasIndex("SchdeduleId");
-
-                    b.HasIndex("SpecialityId");
-
-                    b.ToTable("DoctorTreatment");
-                });
-
             modelBuilder.Entity("ClinicSystem.Models.Patient", b =>
                 {
                     b.Property<int>("Id")
@@ -452,33 +420,6 @@ namespace ClinicSystem.Migrations
                     b.HasOne("ClinicSystem.Models.Speciality", "Speciality")
                         .WithMany("Doctors")
                         .HasForeignKey("SpecialityID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ClinicSystem.Models.DoctorTreatment", b =>
-                {
-                    b.HasOne("ClinicSystem.Models.Doctor", "Doctor")
-                        .WithMany("DoctorTreatment")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ClinicSystem.Models.Patient", "Patient")
-                        .WithMany("DoctorTreatment")
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ClinicSystem.Models.Schedule", "Schedule")
-                        .WithMany("DoctorTreatment")
-                        .HasForeignKey("SchdeduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ClinicSystem.Models.Speciality", "Speciality")
-                        .WithMany("DoctorTreatment")
-                        .HasForeignKey("SpecialityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

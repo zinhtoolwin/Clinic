@@ -24,6 +24,5 @@ namespace ClinicSystem.Models
         public DateTime ToTime { get; set; }
 
        public ICollection<Appointment> Appointments { get; set; }
-        public ICollection<DoctorTreatment> DoctorTreatment { get; set; }
     }
 }

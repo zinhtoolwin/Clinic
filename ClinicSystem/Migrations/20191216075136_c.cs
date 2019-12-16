@@ -2,7 +2,7 @@
 
 namespace ClinicSystem.Migrations
 {
-    public partial class test3 : Migration
+    public partial class c : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

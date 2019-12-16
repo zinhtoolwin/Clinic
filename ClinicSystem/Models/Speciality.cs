@@ -13,7 +13,6 @@ namespace ClinicSystem.Models
         public string Name { get; set; }
         
         public ICollection<Doctor> Doctors { get; set; }
-        public ICollection<DoctorTreatment> DoctorTreatment { get; set; }
 
     }
 }

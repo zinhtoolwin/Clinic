@@ -30,7 +30,7 @@ namespace ClinicSystem.Models
 
         public ICollection<Schedule> Schedules { get; set; }
 
-        public ICollection<DoctorTreatment> DoctorTreatment { get; set; }
+      
 
     }
 }

@@ -60,7 +60,6 @@ namespace ClinicSystem.Data
 
         public DbSet<Appointment> Appointments { get; set; }
 
-        public DbSet<DoctorTreatment> DoctorTreatment { get; set; }
         
     }
 }
