@@ -4,14 +4,16 @@ using ClinicSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ClinicSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191216064825_test4")]
+    partial class test4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,7 +109,7 @@ namespace ClinicSystem.Migrations
                     b.Property<int>("SchdeduleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SpecialityId")
+                    b.Property<int>("SpecialityID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -118,7 +120,7 @@ namespace ClinicSystem.Migrations
 
                     b.HasIndex("SchdeduleId");
 
-                    b.HasIndex("SpecialityId");
+                    b.HasIndex("SpecialityID");
 
                     b.ToTable("DoctorTreatment");
                 });
@@ -478,7 +480,7 @@ namespace ClinicSystem.Migrations
 
                     b.HasOne("ClinicSystem.Models.Speciality", "Speciality")
                         .WithMany("DoctorTreatment")
-                        .HasForeignKey("SpecialityId")
+                        .HasForeignKey("SpecialityID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -42,8 +42,8 @@ namespace ClinicSystem.Data
                 .HasOne<Schedule>(a => a.Schedule)
                 .WithMany(b => b.Appointments)
                 .HasForeignKey(v => v.ScheduleId);
-               
 
+           
 
 
 
@@ -59,5 +59,8 @@ namespace ClinicSystem.Data
         public DbSet<Schedule> Schedules { get; set; }
 
         public DbSet<Appointment> Appointments { get; set; }
+
+        public DbSet<DoctorTreatment> DoctorTreatment { get; set; }
+        
     }
 }

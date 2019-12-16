@@ -22,5 +22,6 @@ namespace ClinicSystem.Models
         public ICollection<VitalSign> VitalSigns { get; set; }
 
         public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<DoctorTreatment> DoctorTreatment { get; set; }
     }
 }

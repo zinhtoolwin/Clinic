@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicSystem.Data;
 using ClinicSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ClinicSystem.Controllers
 {
+    [Authorize]
     public class SpecialitiesController : Controller
     {
         private readonly ApplicationDbContext _context;

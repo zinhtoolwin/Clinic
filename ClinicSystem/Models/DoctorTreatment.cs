@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClinicSystem.Models
 {
-    public class Schedule
+    public class DoctorTreatment
     {
         [Key]
         public int Id { get; set; }
@@ -15,15 +15,19 @@ namespace ClinicSystem.Models
         [ForeignKey("Doctor")]
         public int DoctorId { get; set; }
         public Doctor Doctor { get; set; }
-        public string Day { get; set; }
 
-        [DataType(DataType.Time)]
-        public DateTime FromTime { get; set; }
+        [ForeignKey("Speciality")]
+        public int SpecialityId { get; set; }
+        public Speciality Speciality { get; set; }
 
-        [DataType(DataType.Time)]
-        public DateTime ToTime { get; set; }
+        [ForeignKey("Patient")]
+        public int PatientId { get; set; }
+        public Patient Patient { get; set; }
 
-       public ICollection<Appointment> Appointments { get; set; }
-        public ICollection<DoctorTreatment> DoctorTreatment { get; set; }
+        [ForeignKey("Schedule")]
+        public int SchdeduleId { get; set; }
+        public Schedule Schedule { get; set; }
+
+
     }
 }
