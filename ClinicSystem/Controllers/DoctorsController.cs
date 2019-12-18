@@ -24,10 +24,10 @@ namespace ClinicSystem.Controllers
         // GET: Doctors
         public async Task<IActionResult> Index(string searchString)
         {
-            var doctor = from m in _context.Doctors select m;
+            var doctor =_context.Doctors.Include(s => s.Speciality);
             if (!String.IsNullOrEmpty(searchString))
             {
-                doctor = doctor.Where(s => s.Name.Contains(searchString));
+                doctor = doctor.Where(s => s.Name.Contains(searchString)).Include(a=>a.Speciality);
             }
             return View(await doctor.ToListAsync());
         }
@@ -54,7 +54,7 @@ namespace ClinicSystem.Controllers
         // GET: Doctors/Create
         public IActionResult Create()
         {
-            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Id");
+            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Name");
             return View();
         }
 
@@ -71,7 +71,7 @@ namespace ClinicSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Id", doctor.SpecialityID);
+            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Name", doctor.SpecialityID);
             return View(doctor);
         }
 
@@ -88,7 +88,7 @@ namespace ClinicSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Id", doctor.SpecialityID);
+            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Name", doctor.SpecialityID);
             return View(doctor);
         }
 
@@ -124,7 +124,7 @@ namespace ClinicSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Id", doctor.SpecialityID);
+            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Name", doctor.SpecialityID);
             return View(doctor);
         }
 

@@ -7,11 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicSystem.Data;
 using ClinicSystem.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ClinicSystem.Controllers
 {
-    [Authorize]
     public class VitalSignsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -48,27 +46,20 @@ namespace ClinicSystem.Controllers
         }
 
         // GET: VitalSigns/Create
-        public async Task<IActionResult> CreateAsync(int? Id)
+        public IActionResult Create(int? Id)
         {
             if (Id == null)
             {
                 return NotFound();
             }
 
-            var patient = await _context.Patients.FindAsync(Id);
+            var patient = _context.Patients.Find(Id);
             if (patient == null)
             {
                 return NotFound();
             }
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name", patient.Id);
+            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name",patient.Id);
             return View();
-            //ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id");
-            //return View();
-
-
-
-            //ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name");
-            //return View();
         }
 
         // POST: VitalSigns/Create
@@ -78,14 +69,13 @@ namespace ClinicSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PatientId,Height,Weight,Temperature,BloodSugar,BloodPressureUNo,BloodPressureLNo")] VitalSign vitalSign)
         {
-            
             if (ModelState.IsValid)
             {
                 _context.Add(vitalSign);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id", vitalSign.PatientId);
+            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name", vitalSign.PatientId);
             return View(vitalSign);
         }
 
@@ -102,7 +92,7 @@ namespace ClinicSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id", vitalSign.PatientId);
+            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name", vitalSign.PatientId);
             return View(vitalSign);
         }
 
@@ -138,7 +128,7 @@ namespace ClinicSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id", vitalSign.PatientId);
+            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name", vitalSign.PatientId);
             return View(vitalSign);
         }
 
