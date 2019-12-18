@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191216075301_testc")]
-    partial class testc
+    [Migration("20191217041800_testInitial")]
+    partial class testInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -139,11 +139,11 @@ namespace ClinicSystem.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FromTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("FromTime")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ToTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ToTime")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

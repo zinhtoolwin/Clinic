@@ -17,11 +17,11 @@ namespace ClinicSystem.Models
         public Doctor Doctor { get; set; }
         public string Day { get; set; }
 
-        [DataType(DataType.Time)]
-        public DateTime FromTime { get; set; }
+        
+        public string FromTime { get; set; }
 
-        [DataType(DataType.Time)]
-        public DateTime ToTime { get; set; }
+        
+        public string ToTime { get; set; }
 
        public ICollection<Appointment> Appointments { get; set; }
     }

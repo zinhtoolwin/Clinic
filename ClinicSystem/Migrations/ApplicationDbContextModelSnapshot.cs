@@ -137,11 +137,11 @@ namespace ClinicSystem.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FromTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("FromTime")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ToTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ToTime")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
