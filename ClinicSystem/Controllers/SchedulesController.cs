@@ -55,7 +55,7 @@ namespace ClinicSystem.Controllers
         // GET: Schedules/Create
         public IActionResult Create()
         {
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Id");
+            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name");
             return View();
         }
 
@@ -72,7 +72,7 @@ namespace ClinicSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Id", schedule.DoctorId);
+            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name", schedule.DoctorId);
             return View(schedule);
         }
 
@@ -89,7 +89,7 @@ namespace ClinicSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Id", schedule.DoctorId);
+            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name", schedule.DoctorId);
             return View(schedule);
         }
 
@@ -125,7 +125,7 @@ namespace ClinicSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Id", schedule.DoctorId);
+            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name", schedule.DoctorId);
             return View(schedule);
         }
 
