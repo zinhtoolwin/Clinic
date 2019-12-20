@@ -13,6 +13,17 @@
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+   
+
+ 
+
+
 </head>
 
 <body class="">
@@ -72,10 +83,21 @@
                             <i class="ni ni-pin-3 text-orange"></i> Patients(Register)
                         </a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link " asp-area="" asp-controller="Appointments" asp-action="Index">
                             <i class="ni ni-bullet-list-67 text-red"></i> AppointmentSSS
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link " asp-area="" asp-controller="Drugs" asp-action="Index">
+                            <i class="ni ni-bullet-list-67 text-red"></i> Add Drug
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " asp-area="" asp-controller="DrugSells" asp-action="Index">
+                            <i class="ni ni-bullet-list-67 text-red"></i> Drug Sell
                         </a>
                     </li>
                     <li class="nav-item">
@@ -120,15 +142,30 @@
             @RenderBody()
         </main>
     </div>
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/assets/js/plugins/jquery/dist/jquery.min.js"></script>
     <script src="~/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="~/assets/js/plugins/chart.js/dist/Chart.min.js"></script>
     <script src="~/assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
     <script src="~/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+
     @RenderSection("Scripts", required: false)
 
 </body>

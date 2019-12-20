@@ -48,7 +48,7 @@ namespace ClinicSystem.Controllers
         // GET: Doctors/Create
         public IActionResult Create()
         {
-            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Id");
+            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace ClinicSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Id", doctor.SpecialityID);
+            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Name", doctor.SpecialityID);
             return View(doctor);
         }
 
@@ -82,7 +82,7 @@ namespace ClinicSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Id", doctor.SpecialityID);
+            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Name", doctor.SpecialityID);
             return View(doctor);
         }
 
@@ -118,7 +118,7 @@ namespace ClinicSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Id", doctor.SpecialityID);
+            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Name", doctor.SpecialityID);
             return View(doctor);
         }
 

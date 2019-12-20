@@ -4,14 +4,16 @@ using ClinicSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ClinicSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191213041750_test1")]
+    partial class test1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,7 +95,7 @@ namespace ClinicSystem.Migrations
 
             modelBuilder.Entity("ClinicSystem.Models.Drug", b =>
                 {
-                    b.Property<int>("DrugId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -104,10 +106,7 @@ namespace ClinicSystem.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.HasKey("DrugId");
+                    b.HasKey("Id");
 
                     b.ToTable("Drug");
                 });
@@ -134,33 +133,29 @@ namespace ClinicSystem.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("PatientName")
+                    b.Property<int>("DrugId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Frequency")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NoofDay")
+                        .HasColumnType("int");
 
                     b.Property<int>("Qty")
                         .HasColumnType("int");
 
-                    b.Property<int>("Total_Price")
+                    b.Property<int>("TotalQty")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DrugId");
+
                     b.ToTable("DrugSell");
-                });
-
-            modelBuilder.Entity("ClinicSystem.Models.DrugSellDrug", b =>
-                {
-                    b.Property<int>("DrugId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DrugsellId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DrugId", "DrugsellId");
-
-                    b.HasIndex("DrugsellId");
-
-                    b.ToTable("DrugSellDrugs");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.Patient", b =>
@@ -496,17 +491,11 @@ namespace ClinicSystem.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ClinicSystem.Models.DrugSellDrug", b =>
+            modelBuilder.Entity("ClinicSystem.Models.DrugSell", b =>
                 {
                     b.HasOne("ClinicSystem.Models.Drug", "Drug")
-                        .WithMany("DrugSellDrugs")
+                        .WithMany("DrugSells")
                         .HasForeignKey("DrugId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ClinicSystem.Models.DrugSell", "DrugSell")
-                        .WithMany("DrugSellDrugs")
-                        .HasForeignKey("DrugsellId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

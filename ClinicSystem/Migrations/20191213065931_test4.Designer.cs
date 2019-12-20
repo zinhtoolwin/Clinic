@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191212092520_test2")]
-    partial class test2
+    [Migration("20191213065931_test4")]
+    partial class test4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -91,6 +91,81 @@ namespace ClinicSystem.Migrations
                     b.HasIndex("SpecialityID");
 
                     b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.Drug", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Drug");
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.DrugOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("OrderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DrugOrders");
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.DrugSell", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Frequency")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NoofDay")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DrugSell");
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.DrugSellDrug", b =>
+                {
+                    b.Property<int>("DrugId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DrugsellId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DrugId", "DrugsellId");
+
+                    b.HasIndex("DrugsellId");
+
+                    b.ToTable("DrugSellDrug");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.Patient", b =>
@@ -422,6 +497,21 @@ namespace ClinicSystem.Migrations
                     b.HasOne("ClinicSystem.Models.Speciality", "Speciality")
                         .WithMany("Doctors")
                         .HasForeignKey("SpecialityID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.DrugSellDrug", b =>
+                {
+                    b.HasOne("ClinicSystem.Models.Drug", "Drug")
+                        .WithMany("DrugSellDrugs")
+                        .HasForeignKey("DrugId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClinicSystem.Models.DrugSell", "DrugSell")
+                        .WithMany("DrugSellDrugs")
+                        .HasForeignKey("DrugsellId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

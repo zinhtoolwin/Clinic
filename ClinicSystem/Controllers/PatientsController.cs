@@ -20,9 +20,15 @@ namespace ClinicSystem.Controllers
         }
 
         // GET: Patients
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Patients.ToListAsync());
+            var patients = from p in _context.Patients select p;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                patients = patients.Where(s => s.Name.Contains(searchString));
+            }
+            return View(await patients.ToListAsync());
+            //return View(await _context.Patients.ToListAsync());
         }
 
         // GET: Patients/Details/5

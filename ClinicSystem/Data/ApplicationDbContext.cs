@@ -42,9 +42,11 @@ namespace ClinicSystem.Data
                 .HasOne<Schedule>(a => a.Schedule)
                 .WithMany(b => b.Appointments)
                 .HasForeignKey(v => v.ScheduleId);
-               
 
 
+            builder.Entity<DrugSellDrug>()
+                .HasKey(sc => new { sc.DrugId, sc.DrugsellId });
+                
 
 
 
@@ -59,5 +61,11 @@ namespace ClinicSystem.Data
         public DbSet<Schedule> Schedules { get; set; }
 
         public DbSet<Appointment> Appointments { get; set; }
+
+        public DbSet<Drug> Drug { get; set; }
+        public DbSet<DrugOrder> DrugOrders { get; set; }
+        public DbSet<DrugSell> DrugSell { get; set; }
+
+        public DbSet<DrugSellDrug> DrugSellDrugs { get; set; }
     }
 }

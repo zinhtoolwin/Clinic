@@ -47,6 +47,33 @@ namespace ClinicSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Drug",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Category = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Drug", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DrugOrders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DrugOrders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Patients",
                 columns: table => new
                 {
@@ -180,6 +207,30 @@ namespace ClinicSystem.Migrations
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DrugSell",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Frequency = table.Column<int>(nullable: false),
+                    NoofDay = table.Column<int>(nullable: false),
+                    Qty = table.Column<int>(nullable: false),
+                    TotalQty = table.Column<int>(nullable: false),
+                    DrugId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DrugSell", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DrugSell_Drug_DrugId",
+                        column: x => x.DrugId,
+                        principalTable: "Drug",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -342,6 +393,11 @@ namespace ClinicSystem.Migrations
                 column: "SpecialityID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DrugSell_DrugId",
+                table: "DrugSell",
+                column: "DrugId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Schedules_DoctorId",
                 table: "Schedules",
                 column: "DoctorId");
@@ -373,6 +429,12 @@ namespace ClinicSystem.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "DrugOrders");
+
+            migrationBuilder.DropTable(
+                name: "DrugSell");
+
+            migrationBuilder.DropTable(
                 name: "VitalSigns");
 
             migrationBuilder.DropTable(
@@ -383,6 +445,9 @@ namespace ClinicSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Drug");
 
             migrationBuilder.DropTable(
                 name: "Patients");

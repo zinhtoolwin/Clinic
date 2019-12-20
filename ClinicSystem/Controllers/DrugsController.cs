@@ -10,23 +10,22 @@ using ClinicSystem.Models;
 
 namespace ClinicSystem.Controllers
 {
-    public class SchedulesController : Controller
+    public class DrugsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public SchedulesController(ApplicationDbContext context)
+        public DrugsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Schedules
+        // GET: Drugs
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Schedules.Include(s => s.Doctor);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Drug.ToListAsync());
         }
 
-        // GET: Schedules/Details/5
+        // GET: Drugs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +33,39 @@ namespace ClinicSystem.Controllers
                 return NotFound();
             }
 
-            var schedule = await _context.Schedules
-                .Include(s => s.Doctor)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (schedule == null)
+            var drug = await _context.Drug
+                .FirstOrDefaultAsync(m => m.DrugId == id);
+            if (drug == null)
             {
                 return NotFound();
             }
 
-            return View(schedule);
+            return View(drug);
         }
 
-        // GET: Schedules/Create
+        // GET: Drugs/Create
         public IActionResult Create()
         {
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name");
             return View();
         }
 
-        // POST: Schedules/Create
+        // POST: Drugs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DoctorId,Day,FromTime,ToTime")] Schedule schedule)
+        public async Task<IActionResult> Create([Bind("Id,Name,Category,Price")] Drug drug)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(schedule);
+                _context.Add(drug);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name", schedule.DoctorId);
-            return View(schedule);
+            return View(drug);
         }
 
-        // GET: Schedules/Edit/5
+        // GET: Drugs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +73,22 @@ namespace ClinicSystem.Controllers
                 return NotFound();
             }
 
-            var schedule = await _context.Schedules.FindAsync(id);
-            if (schedule == null)
+            var drug = await _context.Drug.FindAsync(id);
+            if (drug == null)
             {
                 return NotFound();
             }
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name", schedule.DoctorId);
-            return View(schedule);
+            return View(drug);
         }
 
-        // POST: Schedules/Edit/5
+        // POST: Drugs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DoctorId,Day,FromTime,ToTime")] Schedule schedule)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Category,Price")] Drug drug)
         {
-            if (id != schedule.Id)
+            if (id != drug.DrugId)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace ClinicSystem.Controllers
             {
                 try
                 {
-                    _context.Update(schedule);
+                    _context.Update(drug);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ScheduleExists(schedule.Id))
+                    if (!DrugExists(drug.DrugId))
                     {
                         return NotFound();
                     }
@@ -118,11 +113,10 @@ namespace ClinicSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name", schedule.DoctorId);
-            return View(schedule);
+            return View(drug);
         }
 
-        // GET: Schedules/Delete/5
+        // GET: Drugs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,31 +124,30 @@ namespace ClinicSystem.Controllers
                 return NotFound();
             }
 
-            var schedule = await _context.Schedules
-                .Include(s => s.Doctor)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (schedule == null)
+            var drug = await _context.Drug
+                .FirstOrDefaultAsync(m => m.DrugId == id);
+            if (drug == null)
             {
                 return NotFound();
             }
 
-            return View(schedule);
+            return View(drug);
         }
 
-        // POST: Schedules/Delete/5
+        // POST: Drugs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var schedule = await _context.Schedules.FindAsync(id);
-            _context.Schedules.Remove(schedule);
+            var drug = await _context.Drug.FindAsync(id);
+            _context.Drug.Remove(drug);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ScheduleExists(int id)
+        private bool DrugExists(int id)
         {
-            return _context.Schedules.Any(e => e.Id == id);
+            return _context.Drug.Any(e => e.DrugId == id);
         }
     }
 }
