@@ -27,70 +27,127 @@
         </div>
         <div class="form-group">
             <label class="form-group">Treatement Date</label>
-            <select class="form-control" id="treatname">
-                <option value="0">Select Treatement Date</option>
-            </select>
+            <input type="date" id="teateDate" class="form-control" />
         </div>
         <div class="form-group">
             <input type="button" value="Show Appointment" class="btn btn-primary" id="showappointment" />
         </div>
         <table class="table" id="patientList">
-            
-
         </table>
+
+
+
+
 
 
     </form>
 
-    <!--vital sign-->
-    <form asp-action="post">
-        <div class="row form-group">
-            <input type="text" id="vital" class="form-group" />
+    <!-- The Modal Vital -->
+    <div class="modal fade" id="myModalVital">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Vital Sign</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label class="form-group">Patient Name</label>
+                            <input class="form-control" type="text" id="Pname" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-group">Height</label>
+                            <input class="form-control" type="text" id="height" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-group">Weight</label>
+                            <input class="form-control" type="text" id="weight" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-group">Temperature</label>
+                            <input class="form-control" type="text" id="temp" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-group">Blood Sugar</label>
+                            <input class="form-control" type="text" id="bs" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-group">Upper Blood</label>
+                            <input class="form-control" type="text" id="ub" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-group">Lower Blood</label>
+                            <input class="form-control" type="text" id="lb" />
+                        </div>
+
+                    </form>
+
+
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
         </div>
-        <div class="form-group">
-            <input type="button" value="Serach Vital Sign For Patient" class="btn btn-primary" id="serachVital" placeholder="Enter patient name" />
+    </div>
+
+
+    <!-- The Modal Drugs -->
+    <div class="modal fade" id="myModalDrug">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Drugs Orders</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label class="form-group">Doctor Name</label>
+                            <input type="text" id="DocName" class="form-control" />
+
+                            <label class="form-group">Patient Name</label>
+                            <input type="text" id="PaName" class="form-control" />
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
         </div>
+    </div>
 
-        <table class="table table-bordered" id="vitalList">
-            
-
-        </table>
-
-    </form>
 </div>
 @section Scripts{ 
         <script>
-            $(function () {
-                callSpecial();
-                $("#sname").change(function () {
-                    var specialId = this.value;
-                    callDoctorBySpecial(specialId);
-                });
-                $("#dname").change(function () {
-                    var doctorId = this.value;
-                    callPartByDoctor(doctorId);
-                });
-                $("#dayname").change(function () {
-                    var scheduleId = this.value;
-                    callTreateBySchdule(scheduleId);
-                });
-                $("#showappointment").click(function () {
-                    var day =document.getElementById("treatname").value;
-                    callAppointmentTableByDays(day);
-                });
-
-                $("#serachVital").click(function () {
-                    var patientName = document.getElementById("vital").value;
-                    callVitalTableByPatientName(patientName);
-                });
-            });
-            function callSpecial() {
+             function callSpecial() {
                    $.ajax({
                         type: 'GET',
                         url: '/api/DoctorTreatment/getSpecial',
                         success: function (result) {
-                            //refresh 
-                            $("#sname").html("").append("<option value='0'>Select Special</option>");
                             var clist = result;
                             $.each(clist, function (e, value) {
                                 $("#sname").append("<option value=" + value.id + ">" + value.name + "</option>");
@@ -128,49 +185,79 @@
                 });
             }
 
-            function callTreateBySchdule(scheduleId) {
+            
+
+            function callAppointmentTableByDays(scheduleId, treateDate) {
+                alert(scheduleId + "/" + treateDate);
                 $.ajax({
                     type: 'GET',
-                    url: '/api/DoctorTreatment/getTreatmentDateBySchduleDay/' + scheduleId,
+                    url: '/api/DoctorTreatment/getAppointmentTableByDays/' + scheduleId + '/' + treateDate,
                     success: function (result) {
                         //refresh
-                         $("#treatname").html("").append("<option value='0'>Select Treatement Date</option>");
+                        $("#patientList").html("").append("<tr><th style='display:none;'>DoctorId</th><th style='display:none;'>PatientId</th><th>DoctorName</th> <th>PatientName</th> <th>Appointment Date</th><th>Treatement Date</th><td>Vital Sign</td><td>Drugs Order</td></tr>");
+
                         var clist = result;
                         $.each(clist, function (e, value) {
-                            $("#treatname").append("<option value=" + value.id + ">" + value.treatementDate + "</option>");
+                            $("#patientList").append("<tr><td style='display:none;'>" + value.schedule.doctor.id + "</td><td style='display:none;'>" + value.patientId + "</td><td>" + value.schedule.doctor.name + "</td><td>" + value.patient.name + "</td><td>" + value.appointmentDate + "</td><td>" + value.treatementDate + "</td><td> <input onclick='clickVital(this);' type='button' value='Vital Sign' class='btn btn-success' data-toggle='modal' data-target='#myModalVital'></td><td> <input onclick='clickDrug(this);' type='button' value='Drugs Order' class='btn btn-success' data-toggle='modal' data-target='#myModalDrug'></td></tr> ");
                         });
                     }
                 });
             }
 
-            function callAppointmentTableByDays(day) {
+            function clickVital(e) {
+                var id = $(e).closest("tr").find('td:eq(1)').text();
                 $.ajax({
                     type: 'GET',
-                    url: '/api/DoctorTreatment/getAppointmentTableByDays/' + day,
+                    url: '/api/DoctorTreatment/getVitalByPatient/' + id,
                     success: function (result) {
-                        $("#patientList").html("").append("<tr><th>DoctorName</th> <th>PatientName</th> <th>Appointment Date</th><th>Treatement Date</th></tr>");
                         var clist = result;
                         $.each(clist, function (e, value) {
-                            $("#patientList").append("<tr><td>" + value.schedule.doctor.name + "</td><td>" + value.patient.name + "</td><td>" + value.appointmentDate + "</td><td>" + value.treatementDate + "</td><tr>");
-                        });
-                    }
-                });
-            }
+                            $("#Pname").val(value.patient.name);
+                            $("#height").val(value.height);
+                            $("#weight").val(value.weight);
+                            $("#temp").val(value.temperature);
+                            $("#bs").val(value.bloodSugar);
+                            $("#ub").val(value.bloodPressureUNo);
+                            $("#lb").val(value.bloodPressureLNo);
 
-            function callVitalTableByPatientName(patientName) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/DoctorTreatment/getVitalTableByPatientName/' + patientName,
-                    success: function (result) {
-                        $("#vitalList").html("").append("<tr><th>Patient Name</th><th>Height</th><th>Weight</th><th>Temperature</th><th>Blood Suger</th><th>Upper Blood Pressure</th><th>Lower Blood Pressures</th> </tr>");
-                        var clist = result;
-                        $.each(clist, function (e, value) {
-                            $("#vitalList").append("<tr><td>" + value.patient.name + "</td><td>" + value.height + "</td><td>" + value.weight + "</td><td>" + value.temperature + "</td><td>" + value.bloodSugar + "</td><td>"+value.bloodPressureUNo+"</td><td>"+value.bloodPressureLNo+"</td></tr>");
                         });
                     }
                 });
 
             }
+
+            function clickDrug(e) {
+                var doctorName = $(e).closest("tr").find('td:eq(2)').text();
+                var patientName = $(e).closest("tr").find('td:eq(3)').text();
+                document.getElementById("DocName").value = doctorName;
+                document.getElementById("PaName").value = patientName;
+            }
+
+
+
+            $(function () {
+                callSpecial();
+                $("#sname").change(function () {
+                    var specialId = this.value;
+                    callDoctorBySpecial(specialId);
+                });
+                $("#dname").change(function () {
+                    var doctorId = this.value;
+                    callPartByDoctor(doctorId);
+                });
+
+
+                
+                $("#showappointment").click(function () {
+                    var scheduleId = document.getElementById("dayname").value;
+                    var treateDate = document.getElementById("teateDate").value;
+                    callAppointmentTableByDays(scheduleId, treateDate);
+                });
+
+                
+            });
+
+           
 
 
         </script>

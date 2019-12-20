@@ -38,34 +38,24 @@ namespace ClinicSystem.Controllers
             var list = _context.Schedules.Where(a => a.Doctor.Id == doctorId);
             return list;
         }
-        [HttpGet("getTreatmentDateBySchduleDay/{scheduleId}")]
-        public IEnumerable<Appointment> GetTreatmentDateBySchduleDay(int scheduleId)
-        {
-            var list = _context.Appointments.Where(a => a.Schedule.Id ==scheduleId);
-            return list;
-        }
-      [HttpGet("getShowAppointment/{schduleId}")]
-      public IEnumerable<Appointment> GetShowAppointment(int schduleId)
-        {
-            var list = _context.Appointments.Where(a => a.Schedule.Id == schduleId);
-            return list;
+        
+      
 
-        }
-
-        [HttpGet("getAppointmentTableByDays/{day}")]
-        public IEnumerable<Appointment> GetAppointmentTableByDays(int day)
+        [HttpGet("getAppointmentTableByDays/{scheduleId}/{treateDate}")]
+        public IEnumerable<Appointment> GetAppointmentTableByDays(int scheduleId, DateTime treateDate)
         {
             
-            var list = _context.Appointments.Include(s=>s.Schedule).ThenInclude(d=>d.Doctor).Include(p=>p.Patient).Where(a => a.Id == day).ToList();
+            var list = _context.Appointments.Include(s=>s.Schedule).ThenInclude(d=>d.Doctor).Include(p=>p.Patient).Where(a => a.Schedule.Id == scheduleId).Where(o=>o.TreatementDate== treateDate).ToList();
             return list;
         }
 
-        [HttpGet("getVitalTableByPatientName/{patientName}")]
-        public IEnumerable<VitalSign> getVitalTableByPatientName(string patientName)
+        [HttpGet("getVitalByPatient/{id}")]
+        public IEnumerable<VitalSign> GetVitalByPatient(int id)
         {
-
-            var list = _context.VitalSigns.Include(r=>r.Patient).Where(a => a.Patient.Name == patientName);
+            var list = _context.VitalSigns.Include(b=>b.Patient).Where(a => a.Patient.Id == id);
             return list;
         }
+
+
     }
 }
