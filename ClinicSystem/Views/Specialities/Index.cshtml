@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+    <h1>Speciality</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -12,7 +12,7 @@
 
 <form asp-controller="Specialities" asp-action="Index">
     <p>
-        Speciality:<input type="text" class="form-group" name="searchString"/>
+        Speciality:<input type="text" class="form-group" name="searchString" />
         <input type="submit" class="btn btn-secondary" value="Search" />
     </p>
 </form>
@@ -41,3 +41,11 @@
         }
     </tbody>
 </table>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#classList1").addClass("active");
+        });
+    </script>
+
+}

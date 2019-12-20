@@ -22,7 +22,7 @@ namespace ClinicSystem.Controllers
         // GET: Drugs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Drug.ToListAsync());
+            return View(await _context.Drugs.ToListAsync());
         }
 
         // GET: Drugs/Details/5
@@ -33,7 +33,7 @@ namespace ClinicSystem.Controllers
                 return NotFound();
             }
 
-            var drug = await _context.Drug
+            var drug = await _context.Drugs
                 .FirstOrDefaultAsync(m => m.DrugId == id);
             if (drug == null)
             {
@@ -73,7 +73,7 @@ namespace ClinicSystem.Controllers
                 return NotFound();
             }
 
-            var drug = await _context.Drug.FindAsync(id);
+            var drug = await _context.Drugs.FindAsync(id);
             if (drug == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace ClinicSystem.Controllers
                 return NotFound();
             }
 
-            var drug = await _context.Drug
+            var drug = await _context.Drugs
                 .FirstOrDefaultAsync(m => m.DrugId == id);
             if (drug == null)
             {
@@ -139,15 +139,15 @@ namespace ClinicSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var drug = await _context.Drug.FindAsync(id);
-            _context.Drug.Remove(drug);
+            var drug = await _context.Drugs.FindAsync(id);
+            _context.Drugs.Remove(drug);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DrugExists(int id)
         {
-            return _context.Drug.Any(e => e.DrugId == id);
+            return _context.Drugs.Any(e => e.DrugId == id);
         }
     }
 }

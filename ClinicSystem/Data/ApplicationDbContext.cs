@@ -57,6 +57,8 @@ namespace ClinicSystem.Data
         public DbSet<Patient> Patients { get; set; }
         public DbSet<VitalSign> VitalSigns { get; set; }
         public DbSet<Speciality> Specialities { get; set; }
+        public DbSet<Drug> Drugs { get; set; }
+        public DbSet<DrugSell> DrugSells { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
 

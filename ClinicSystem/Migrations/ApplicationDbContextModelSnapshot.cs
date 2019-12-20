@@ -109,22 +109,7 @@ namespace ClinicSystem.Migrations
 
                     b.HasKey("DrugId");
 
-                    b.ToTable("Drug");
-                });
-
-            modelBuilder.Entity("ClinicSystem.Models.DrugOrder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("OrderName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DrugOrders");
+                    b.ToTable("Drugs");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.DrugSell", b =>
@@ -145,7 +130,7 @@ namespace ClinicSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DrugSell");
+                    b.ToTable("DrugSells");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.DrugSellDrug", b =>
@@ -160,7 +145,7 @@ namespace ClinicSystem.Migrations
 
                     b.HasIndex("DrugsellId");
 
-                    b.ToTable("DrugSellDrugs");
+                    b.ToTable("DrugSellDrug");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.Patient", b =>

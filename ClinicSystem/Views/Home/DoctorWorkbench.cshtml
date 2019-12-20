@@ -35,8 +35,6 @@
             <input type="button" value="Show Appointment" class="btn btn-primary" id="showappointment" />
         </div>
         <table class="table" id="patientList">
-            
-
         </table>
 
 
@@ -52,127 +50,131 @@
         </div>
 
         <table class="table table-bordered" id="vitalList">
-            
-
         </table>
 
     </form>
 </div>
-@section Scripts{ 
-        <script>
-            $(function () {
-                callSpecial();
-                $("#sname").change(function () {
-                    var specialId = this.value;
-                    callDoctorBySpecial(specialId);
-                });
-                $("#dname").change(function () {
-                    var doctorId = this.value;
-                    callPartByDoctor(doctorId);
-                });
-                $("#dayname").change(function () {
-                    var scheduleId = this.value;
-                    callTreateBySchdule(scheduleId);
-                });
-                $("#showappointment").click(function () {
-                    var day =document.getElementById("treatname").value;
-                    callAppointmentTableByDays(day);
-                });
-
-                $("#serachVital").click(function () {
-                    var patientName = document.getElementById("vital").value;
-                    callVitalTableByPatientName(patientName);
-                });
+@section Scripts{
+    <script>
+        $(function () {
+            callSpecial();
+            $("#sname").change(function () {
+                var specialId = this.value;
+                callDoctorBySpecial(specialId);
             });
-            function callSpecial() {
-                   $.ajax({
-                        type: 'GET',
-                        url: '/api/DoctorTreatment/getSpecial',
-                        success: function (result) {
-                            //refresh 
-                            $("#sname").html("").append("<option value='0'>Select Special</option>");
-                            var clist = result;
-                            $.each(clist, function (e, value) {
-                                $("#sname").append("<option value=" + value.id + ">" + value.name + "</option>");
-                            });
+            $("#dname").change(function () {
+                var doctorId = this.value;
+                callPartByDoctor(doctorId);
+            });
+            $("#dayname").change(function () {
+                var scheduleId = this.value;
+                callTreateBySchdule(scheduleId);
+            });
+            $("#showappointment").click(function () {
+                var day = document.getElementById("treatname").value;
+                callAppointmentTableByDays(day);
+            });
 
-                        }
+            $("#serachVital").click(function () {
+                var patientName = document.getElementById("vital").value;
+                callVitalTableByPatientName(patientName);
+            });
+        });
+        function callSpecial() {
+            $.ajax({
+                type: 'GET',
+                url: '/api/DoctorTreatment/getSpecial',
+                success: function (result) {
+                    //refresh
+                    $("#sname").html("").append("<option value='0'>Select Special</option>");
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#sname").append("<option value=" + value.id + ">" + value.name + "</option>");
                     });
-            }
-            function callDoctorBySpecial(specialId) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/DoctorTreatment/getDoctorBySpecial/' + specialId,
-                    success: function (result) {
-                        //refresh
-                      $("#dname").html("").append("<option value='0'>Select Doctor</option>");
-                        var clist = result;
-                        $.each(clist, function (e, value) {
-                            $("#dname").append("<option value=" + value.id + ">" + value.name + "</option>");
-                        });
-                    }
-                });
-            }
-            function callPartByDoctor(doctorId) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/DoctorTreatment/getPartByDoctor/' + doctorId,
-                    success: function (result) {
-                        //refresh
-                         $("#dayname").html("").append("<option value='0'>Select Day Part</option>");
-                        var clist = result;
-                        $.each(clist, function (e, value) {
-                            $("#dayname").append("<option value=" + value.id + ">" + value.day + "</option>");
-                        });
-                    }
-                });
-            }
 
-            function callTreateBySchdule(scheduleId) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/DoctorTreatment/getTreatmentDateBySchduleDay/' + scheduleId,
-                    success: function (result) {
-                        //refresh
-                         $("#treatname").html("").append("<option value='0'>Select Treatement Date</option>");
-                        var clist = result;
-                        $.each(clist, function (e, value) {
-                            $("#treatname").append("<option value=" + value.id + ">" + value.treatementDate + "</option>");
-                        });
-                    }
-                });
-            }
+                }
+            });
+        }
+        function callDoctorBySpecial(specialId) {
+            $.ajax({
+                type: 'GET',
+                url: '/api/DoctorTreatment/getDoctorBySpecial/' + specialId,
+                success: function (result) {
+                    //refresh
+                    $("#dname").html("").append("<option value='0'>Select Doctor</option>");
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#dname").append("<option value=" + value.id + ">" + value.name + "</option>");
+                    });
+                }
+            });
+        }
+        function callPartByDoctor(doctorId) {
+            $.ajax({
+                type: 'GET',
+                url: '/api/DoctorTreatment/getPartByDoctor/' + doctorId,
+                success: function (result) {
+                    //refresh
+                    $("#dayname").html("").append("<option value='0'>Select Day Part</option>");
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#dayname").append("<option value=" + value.id + ">" + value.day + "</option>");
+                    });
+                }
+            });
+        }
 
-            function callAppointmentTableByDays(day) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/DoctorTreatment/getAppointmentTableByDays/' + day,
-                    success: function (result) {
-                        $("#patientList").html("").append("<tr><th>DoctorName</th> <th>PatientName</th> <th>Appointment Date</th><th>Treatement Date</th></tr>");
-                        var clist = result;
-                        $.each(clist, function (e, value) {
-                            $("#patientList").append("<tr><td>" + value.schedule.doctor.name + "</td><td>" + value.patient.name + "</td><td>" + value.appointmentDate + "</td><td>" + value.treatementDate + "</td><tr>");
-                        });
-                    }
-                });
-            }
+        function callTreateBySchdule(scheduleId) {
+            $.ajax({
+                type: 'GET',
+                url: '/api/DoctorTreatment/getTreatmentDateBySchduleDay/' + scheduleId,
+                success: function (result) {
+                    //refresh
+                    $("#treatname").html("").append("<option value='0'>Select Treatement Date</option>");
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#treatname").append("<option value=" + value.id + ">" + value.treatementDate + "</option>");
+                    });
+                }
+            });
+        }
 
-            function callVitalTableByPatientName(patientName) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/DoctorTreatment/getVitalTableByPatientName/' + patientName,
-                    success: function (result) {
-                        $("#vitalList").html("").append("<tr><th>Patient Name</th><th>Height</th><th>Weight</th><th>Temperature</th><th>Blood Suger</th><th>Upper Blood Pressure</th><th>Lower Blood Pressures</th> </tr>");
-                        var clist = result;
-                        $.each(clist, function (e, value) {
-                            $("#vitalList").append("<tr><td>" + value.patient.name + "</td><td>" + value.height + "</td><td>" + value.weight + "</td><td>" + value.temperature + "</td><td>" + value.bloodSugar + "</td><td>"+value.bloodPressureUNo+"</td><td>"+value.bloodPressureLNo+"</td></tr>");
-                        });
-                    }
-                });
+        function callAppointmentTableByDays(day) {
+            $.ajax({
+                type: 'GET',
+                url: '/api/DoctorTreatment/getAppointmentTableByDays/' + day,
+                success: function (result) {
+                    $("#patientList").html("").append("<tr><th>DoctorName</th> <th>PatientName</th> <th>Appointment Date</th><th>Treatement Date</th></tr>");
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#patientList").append("<tr><td>" + value.schedule.doctor.name + "</td><td>" + value.patient.name + "</td><td>" + value.appointmentDate + "</td><td>" + value.treatementDate + "</td><tr>");
+                    });
+                }
+            });
+        }
 
-            }
+        function callVitalTableByPatientName(patientName) {
+            $.ajax({
+                type: 'GET',
+                url: '/api/DoctorTreatment/getVitalTableByPatientName/' + patientName,
+                success: function (result) {
+                    $("#vitalList").html("").append("<tr><th>Patient Name</th><th>Height</th><th>Weight</th><th>Temperature</th><th>Blood Suger</th><th>Upper Blood Pressure</th><th>Lower Blood Pressures</th> </tr>");
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#vitalList").append("<tr><td>" + value.patient.name + "</td><td>" + value.height + "</td><td>" + value.weight + "</td><td>" + value.temperature + "</td><td>" + value.bloodSugar + "</td><td>" + value.bloodPressureUNo + "</td><td>" + value.bloodPressureLNo + "</td></tr>");
+                    });
+                }
+            });
+
+        }
 
 
-        </script>
-
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#classList9").addClass("active");
+        });
+    </script>
 }
+
+

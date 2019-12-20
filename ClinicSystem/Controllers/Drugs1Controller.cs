@@ -25,14 +25,14 @@ namespace ClinicSystem.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Drug>>> GetDrug()
         {
-            return await _context.Drug.ToListAsync();
+            return await _context.Drugs.ToListAsync();
         }
 
         // GET: api/Drugs1/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Drug>> GetDrug(int id)
         {
-            var drug = await _context.Drug.FindAsync(id);
+            var drug = await _context.Drugs.FindAsync(id);
 
             if (drug == null)
             {
@@ -80,7 +80,7 @@ namespace ClinicSystem.Controllers
         [HttpPost]
         public async Task<ActionResult<Drug>> PostDrug(Drug drug)
         {
-            _context.Drug.Add(drug);
+            _context.Drugs.Add(drug);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDrug", new { id = drug.DrugId }, drug);
@@ -90,13 +90,13 @@ namespace ClinicSystem.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Drug>> DeleteDrug(int id)
         {
-            var drug = await _context.Drug.FindAsync(id);
+            var drug = await _context.Drugs.FindAsync(id);
             if (drug == null)
             {
                 return NotFound();
             }
 
-            _context.Drug.Remove(drug);
+            _context.Drugs.Remove(drug);
             await _context.SaveChangesAsync();
 
             return drug;
@@ -104,7 +104,7 @@ namespace ClinicSystem.Controllers
 
         private bool DrugExists(int id)
         {
-            return _context.Drug.Any(e => e.DrugId == id);
+            return _context.Drugs.Any(e => e.DrugId == id);
         }
     }
 }

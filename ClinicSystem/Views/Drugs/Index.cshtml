@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<ClinicSystem.Models.Drug>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Dr";
 }
 
-<h1>Index</h1>
+    <h1>Drug</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -47,13 +47,9 @@
     </tbody>
 </table>
 @section Scripts{
-
     <script>
-         $(document).ready( function () {
-             $('#myTable').DataTable(
-                 {
-
-                 } );
-    } );
+        $(document).ready(function () {
+            $("#classList6").addClass("active");
+        });
     </script>
 }

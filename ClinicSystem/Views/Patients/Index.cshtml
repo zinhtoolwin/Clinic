@@ -4,13 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+    <h1>Patient</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 <form asp-controller="Patients" asp-action="Index">
-    Patient Name:<input type="text" class="form-group" name="searchString" placeholder="Enter Patient Name"/>
+    Patient Name:<input type="text" class="form-group" name="searchString" placeholder="Enter Patient Name" />
     <input type="submit" class="form-group" value="Search Patient" />
 </form>
 <table class="table">
@@ -77,10 +77,17 @@
 
 @section Scripts{
     <script>
-         $(document).ready( function () {
-             $('#myTable').DataTable(
-                );
-    } );
+        $(document).ready(function () {
+            $('#myTable').DataTable(
+            );
+        });
     </script>
+  
+        <script>
+            $(document).ready(function () {
+                $("#classList4").addClass("active");
+            });
+        </script>
    
+
 }
