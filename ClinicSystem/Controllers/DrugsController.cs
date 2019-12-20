@@ -7,33 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicSystem.Data;
 using ClinicSystem.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ClinicSystem.Controllers
 {
-    [Authorize]
-    public class PatientsController : Controller
+    public class DrugsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public PatientsController(ApplicationDbContext context)
+        public DrugsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Patients
-        public async Task<IActionResult> Index(string searchString)
+        // GET: Drugs
+        public async Task<IActionResult> Index()
         {
-            var patients = from p in _context.Patients select p;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                patients = patients.Where(s => s.Name.Contains(searchString));
-            }
-            return View(await patients.ToListAsync());
-            //return View(await _context.Patients.ToListAsync());
+            return View(await _context.Drug.ToListAsync());
         }
 
-        // GET: Patients/Details/5
+        // GET: Drugs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,39 +33,39 @@ namespace ClinicSystem.Controllers
                 return NotFound();
             }
 
-            var patient = await _context.Patients
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (patient == null)
+            var drug = await _context.Drug
+                .FirstOrDefaultAsync(m => m.DrugId == id);
+            if (drug == null)
             {
                 return NotFound();
             }
 
-            return View(patient);
+            return View(drug);
         }
 
-        // GET: Patients/Create
+        // GET: Drugs/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Patients/Create
+        // POST: Drugs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,Age,Gender,PhoneNo,MariitalStatus,Address")] Patient patient)
+        public async Task<IActionResult> Create([Bind("Id,Name,Category,Price")] Drug drug)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(patient);
+                _context.Add(drug);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(patient);
+            return View(drug);
         }
 
-        // GET: Patients/Edit/5
+        // GET: Drugs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,22 +73,22 @@ namespace ClinicSystem.Controllers
                 return NotFound();
             }
 
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient == null)
+            var drug = await _context.Drug.FindAsync(id);
+            if (drug == null)
             {
                 return NotFound();
             }
-            return View(patient);
+            return View(drug);
         }
 
-        // POST: Patients/Edit/5
+        // POST: Drugs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Age,Gender,PhoneNo,MariitalStatus,Address")] Patient patient)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Category,Price")] Drug drug)
         {
-            if (id != patient.Id)
+            if (id != drug.DrugId)
             {
                 return NotFound();
             }
@@ -105,12 +97,12 @@ namespace ClinicSystem.Controllers
             {
                 try
                 {
-                    _context.Update(patient);
+                    _context.Update(drug);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PatientExists(patient.Id))
+                    if (!DrugExists(drug.DrugId))
                     {
                         return NotFound();
                     }
@@ -121,10 +113,10 @@ namespace ClinicSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(patient);
+            return View(drug);
         }
 
-        // GET: Patients/Delete/5
+        // GET: Drugs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,30 +124,30 @@ namespace ClinicSystem.Controllers
                 return NotFound();
             }
 
-            var patient = await _context.Patients
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (patient == null)
+            var drug = await _context.Drug
+                .FirstOrDefaultAsync(m => m.DrugId == id);
+            if (drug == null)
             {
                 return NotFound();
             }
 
-            return View(patient);
+            return View(drug);
         }
 
-        // POST: Patients/Delete/5
+        // POST: Drugs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var patient = await _context.Patients.FindAsync(id);
-            _context.Patients.Remove(patient);
+            var drug = await _context.Drug.FindAsync(id);
+            _context.Drug.Remove(drug);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PatientExists(int id)
+        private bool DrugExists(int id)
         {
-            return _context.Patients.Any(e => e.Id == id);
+            return _context.Drug.Any(e => e.DrugId == id);
         }
     }
 }

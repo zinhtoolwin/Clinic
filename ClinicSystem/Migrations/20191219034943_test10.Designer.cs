@@ -4,14 +4,16 @@ using ClinicSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ClinicSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191219034943_test10")]
+    partial class test10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,7 +95,7 @@ namespace ClinicSystem.Migrations
 
             modelBuilder.Entity("ClinicSystem.Models.Drug", b =>
                 {
-                    b.Property<int>("DrugId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -107,7 +109,7 @@ namespace ClinicSystem.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.HasKey("DrugId");
+                    b.HasKey("Id");
 
                     b.ToTable("Drug");
                 });
@@ -134,10 +136,22 @@ namespace ClinicSystem.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("PatientName")
+                    b.Property<string>("DrugName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DrugPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DrugQty")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Total_Amt")
                         .HasColumnType("int");
 
                     b.Property<int>("Total_Price")
@@ -209,11 +223,11 @@ namespace ClinicSystem.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FromTime")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("FromTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("ToTime")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("ToTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

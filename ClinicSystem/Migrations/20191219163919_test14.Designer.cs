@@ -4,14 +4,16 @@ using ClinicSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ClinicSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191219163919_test14")]
+    partial class test14
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,7 +95,7 @@ namespace ClinicSystem.Migrations
 
             modelBuilder.Entity("ClinicSystem.Models.Drug", b =>
                 {
-                    b.Property<int>("DrugId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -107,7 +109,7 @@ namespace ClinicSystem.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.HasKey("DrugId");
+                    b.HasKey("Id");
 
                     b.ToTable("Drug");
                 });
@@ -209,11 +211,11 @@ namespace ClinicSystem.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FromTime")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("FromTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("ToTime")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("ToTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

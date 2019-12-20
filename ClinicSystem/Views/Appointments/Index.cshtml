@@ -21,22 +21,22 @@
             <th>
                 Doctor Name
             </th>
-            <th>
+            @*<th>
                 Specialized
-            </th>
-            <th>
+            </th>*@
+            @*@<th>
                 Schedule Day
                 <!--  Html.DisplayNameFor(model => model.Schedule)     -->
-            </th>
-            <th>
+            </th>*@
+            @*<th>
                 Schedule Part Time(From)
             </th>
             <th>
                 Schedule Part Time(End)
-            </th>
-            <th>
+            </th>*@
+            @*<th>
                 @Html.DisplayNameFor(model => model.AppointmentDate)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.TreatementDate)
             </th>
@@ -56,21 +56,21 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Schedule.Doctor.Name)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Schedule.Doctor.Speciality.Name)
-            </td>
-            <td>
+            </td>*@
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Schedule.Day)
-            </td>
-            <td>
+            </td>*@
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Schedule.FromTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Schedule.ToTime)
-            </td>
-            <td>
+            </td>*@
+            @*<td>
                 @Html.DisplayFor(modelItem => item.AppointmentDate)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.TreatementDate)
             </td>

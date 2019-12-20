@@ -1,0 +1,175 @@
+﻿@model ClinicSystem.Models.DrugSellViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>DrugSell</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PatientName" class="control-label"></label>
+                <input asp-for="PatientName" class="form-control" />
+                <span asp-validation-for="PatientName" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="Qty" class="control-label"></label>
+                <input asp-for="Qty" class="form-control" />
+                <span asp-validation-for="Qty" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Total_Amt" class="control-label"></label>
+                <input asp-for="Total_Amt" class="form-control" />
+                <span asp-validation-for="Total_Amt" class="text-danger"></span>
+            </div>
+
+            <fieldset class="form-group">
+                <h5>Drugs</h5>
+                <div class="form-check-inline">
+                    <table class="table table-dark">
+                        <tr>
+                            <th>Category</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                        </tr>
+
+                        <tr>
+                        </tr>
+                        @{
+                            for (int i = 0; i < Model.DrugSellList.Count; i++)
+                            {
+                                <tr>
+                                    @*<td>
+                                        <label asp-for="DrugSellList[i].Category">@Model.DrugSellList[i].Category</label>
+                                    </td>*@
+                                    <td>
+                                        @*<input type="checkbox" asp-for="DrugSellList[i].IsChecked" />*@
+                                        <label id="a@(Model.DrugSellList[i].DrugIdd)">@Model.DrugSellList[i].DrugName </label>
+
+
+                                        <input type="hidden" asp-for="DrugSellList[i].DrugName" />
+                                        @*<input type="hidden" asp-for="DrugSellList[i].DrugId"  />*@
+                                    </td>
+                                    <td> <label id="p@(Model.DrugSellList[i].DrugIdd)">@Model.DrugSellList[i].Price</label></td>
+                                    <td>
+                                        <input  type="button" id="test" class="btn btn-primary" value="Add" data-target="#myTable" onclick="selectDrug('@Model.DrugSellList[i].DrugIdd')" />
+                                    </td>
+                                </tr>
+
+                            }
+                        }
+
+
+                    </table>
+
+                </div>
+                <table id="myTable" class="table table-dark">
+                    <thead>
+                        <tr>
+                            <td>Drug Name</td>
+                            <td>Price</td>
+                            <td>Qty</td>
+                            <td>Total Amt</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </fieldset>
+           
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+
+    <script>
+        var id = document.getElementById("#test");
+        var aa = document.getElementsByName(".btn btn-primary");
+        var count = 0;
+        
+        function selectDrug(id) {
+          
+            //alert(id);
+            var b = "a" + id;
+            //alert(b);
+            var d = "d" + id;
+
+            
+            var drug = $("#a" + id).text();
+            var price = $("#p" + id).text();
+            
+            var price = $("#p" + id).text();
+
+            var qty = $("#in" + count).val();
+
+            var totalamt = $("#tot" + count).val();
+           
+            alert(price);
+            //var inid = $("#in" + id).text();
+            //var tot = $("#tot" + id).text();
+
+            //  var a = $("#").text();
+            //alert(drug);
+            //alert(price);
+            var toTable = "<tr id='test" + id + "'><td>" + drug + "<input type='hidden' name='DrugItemList[" + count + "].DrugIdd' value='" + id + "' /></td><td id='p" + id + "'>" + price + "<input type='hidden' name='DrugItemList[" + count + "].Price' value='" + price + "' /></td><td>" + "<input onkeyup='displaytotal(this)' value='0'  name='DrugItemList[" + count + "].Qty' id='in" + id + "'/><input type='hidden' value='" + id + "' />" + "</td><td>" + "<input  name='DrugItemList[" + count + "].Total_Amt' id='tot" + id + "'/> " + "</td><td><input type='button' data-target='#myTable' value='Delete' id=" + d + " onclick='deleterow(this)' />" + "</td></tr>"
+            $("#myTable").append(toTable);
+              count++;
+
+          
+        }
+        function deleterow(e) {
+            $(e).parent().parent().remove();
+
+        }
+       // var totalamt = $("#tot" + count).val();
+        function displaytotal(e) {
+            
+         
+            var qty = $(e).val();
+
+           // var totalamt = $(e).val();
+
+            //To get ID
+            var id = $(e).siblings()[0];
+            
+            var mid = $(id).val();
+           
+            var price = $("#p" + mid).text();
+            $("#tot" + mid).val((parseInt(price) * parseInt(qty)));
+
+
+           
+            
+           // $('#total' + mid).val(parseInt(price) * parseInt(qty));
+
+            
+
+
+        }
+        
+        
+
+
+
+
+    </script>
+
+
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
