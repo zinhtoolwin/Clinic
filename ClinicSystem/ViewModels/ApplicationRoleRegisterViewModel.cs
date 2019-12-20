@@ -4,15 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ClinicSystem.Models
+namespace ClinicSystem.ViewModels
 {
-    public class Speciality
+    public class ApplicationRoleRegisterViewModel
     {
-        [Key]
-        public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
-        
-        public ICollection<Doctor> Doctors { get; set; }
 
+        public bool IsSelected { get; set; }
     }
 }

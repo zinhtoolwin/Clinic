@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicSystem.Data;
 using ClinicSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ClinicSystem.Controllers
 {
+    [Authorize]
     public class AppointmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -51,6 +53,10 @@ namespace ClinicSystem.Controllers
         {
             ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name");
             ViewData["ScheduleId"] = new SelectList(_context.Schedules, "Id", "Day");
+
+            ViewData["SpecialId"] = new SelectList(_context.Specialities, "Id", "Name");
+            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name");
+
             return View();
         }
 

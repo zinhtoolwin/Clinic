@@ -14,12 +14,43 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="PatientId" class="control-label"></label>
-                <select asp-for="PatientId" class ="form-control" asp-items="ViewBag.PatientId"></select>
+                <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
             </div>
+
+            <!--Choose Specialized-->
             <div class="form-group">
-                <label asp-for="ScheduleId" class="control-label"></label>
-                <select asp-for="ScheduleId" class ="form-control" asp-items="ViewBag.ScheduleId"></select>
+                <label class="form-group">Speciality</label>
+                <select class="form-control" id="special">
+                    <option value="0">Select Speciality</option>
+                </select>
             </div>
+
+            <!--choose Dotor-->
+            <div class="form-group">
+                <label class="form-group">Doctor</label>
+                <select class="form-control" id="doctor">
+                    <option value="0">Select Doctor</option>
+                </select>
+            </div>
+
+            <!--choose Schedule Day part-->
+            <div class="form-group">
+                <label class="form-group">Schedule Part</label>
+                <select asp-for="ScheduleId" class="form-control" id="Schedule">
+                    <option value="0">Select Schedule</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-group">From Time</label>
+                <input type="text" value="" id="fromTime" class="form-control" readonly/>
+            </div>
+
+            <div class="form-group">
+                <label class="form-group">To Time</label>
+                <input type="text" value="" id="toTime" class="form-control" readonly/>
+            </div>
+
             <div class="form-group">
                 <label asp-for="AppointmentDate" class="control-label"></label>
                 <input asp-for="AppointmentDate" class="form-control" type="date" />
@@ -42,5 +73,138 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function () {
+            //callDoctor();
+            callSpecial();
+            //callSchedule();
+
+            $("#special").change(function () {
+                var specialId = this.value;
+                callDoctorBySpecial(specialId);
+            });
+
+            $("#doctor").change(function () {
+                var doctorId = this.value;
+                callScheduleByDoctor(doctorId);
+            });
+
+            $("#Schedule").change(function () {
+                var scheduleId = this.value;
+                callTimeBySchedule(scheduleId);
+            });
+        });
+
+
+        /*
+        function callDoctor() {
+
+            $.ajax({
+                type: 'GET',
+                url: '/api/Appointments1/getDoctor',
+                success: function (result) {
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#doctor").append("<option value=" + value.id + ">" + value.name + "</option>");
+                    });
+
+                }
+            });
+
+
+
+        }
+        */
+
+        function callSpecial() {
+
+            $.ajax({
+                type: 'GET',
+                url: '/api/Appointments1/getSpecialities',
+                success: function (result) {
+                    //refresh 
+                    $("#special").html("").append("<option value='0'>Select Special</option>");
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#special").append("<option value=" + value.id + ">" + value.name + "</option>");
+                    });
+
+                }
+            });
+
+        }
+        /*
+        function callSchedule() {
+
+            $.ajax({
+                type: 'GET',
+                url: '/api/Appointments1/getSchedule',
+                success: function (result) {
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#Schedule").append("<option value=" + value.id + ">" + value.day + "</option>");
+                    });
+
+                }
+            });
+
+        }
+        
+        */
+        function callDoctorBySpecial(specialId) {
+            $.ajax({
+                type: 'GET',
+                url: '/api/Appointments1/getDoctorBySpecial/' + specialId,
+                success: function (result) {
+                    //refresh 
+                    $("#doctor").html("").append("<option value='0'>Select Doctor</option>");
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#doctor").append("<option value=" + value.id + ">" + value.name + "</option>");
+                    });
+
+                }
+            });
+        }
+
+
+        function callScheduleByDoctor(doctorId) {
+            $.ajax({
+                type: 'GET',
+                url: '/api/Appointments1/getScheduleByDoctor/' + doctorId,
+                success: function (result) {
+                    //refresh 
+                    $("#Schedule").html("").append("<option value='0'>Select Schedule</option>");
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#Schedule").append("<option value=" + value.id + ">" + value.day + "</option>");
+                    });
+
+                }
+            });
+        }
+
+        function callTimeBySchedule(scheduleId) {
+            alert(scheduleId);
+            $.ajax({
+                type: 'GET',
+                url: '/api/Appointments1/getTimeBySchedule/' + scheduleId,
+                success: function (result) {
+                    //refresh 
+                    $("#fromTime").val("");
+                    $("#toTime").val("");
+
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#fromTime").val(value.fromTime);
+                        $("#toTime").val(value.toTime);
+                    });
+
+                }
+            });
+            
+        }
+
+
+    </script>
 }

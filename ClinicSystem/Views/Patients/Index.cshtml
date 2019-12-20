@@ -10,12 +10,10 @@
     <a asp-action="Create">Create New</a>
 </p>
 <form asp-controller="Patients" asp-action="Index">
-    <p>
-        Title: <input type="text" name="SearchString">
-        <input type="submit" value="Filter" />
-    </p>
+    Patient Name:<input type="text" class="form-group" name="searchString" placeholder="Enter Patient Name"/>
+    <input type="submit" class="form-group" value="Search Patient" />
 </form>
-<table class="table table-bordered" >
+<table class="table">
     <thead>
         <tr>
             <th>

@@ -9,6 +9,12 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form asp-controller="Doctors" asp-action="Index">
+    <p>
+        Doctor Name:<input type="text" class="form-group" name="searchString" />
+        <input type="submit" class="btn btn-secondary" value="Search Doctor" />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -52,7 +58,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Speciality.Id)
+                @Html.DisplayFor(modelItem => item.Speciality.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Age)

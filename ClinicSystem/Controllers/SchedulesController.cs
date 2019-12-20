@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicSystem.Data;
 using ClinicSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ClinicSystem.Controllers
 {
+    [Authorize]
     public class SchedulesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,10 +22,15 @@ namespace ClinicSystem.Controllers
         }
 
         // GET: Schedules
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var applicationDbContext = _context.Schedules.Include(s => s.Doctor);
-            return View(await applicationDbContext.ToListAsync());
+            //var applicationDbContext = _context.Schedules.Include(s => s.Doctor);
+            var schedule= _context.Schedules.Include(v=>v.Doctor);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                 schedule = _context.Schedules.Where(s => s.Day.Contains(searchString)).Include(a=>a.Doctor);
+            }
+                return View(await schedule.ToListAsync());
         }
 
         // GET: Schedules/Details/5
