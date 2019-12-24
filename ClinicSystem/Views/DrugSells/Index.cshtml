@@ -1,10 +1,13 @@
-﻿@model IEnumerable<ClinicSystem.Models.DrugSell>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model IEnumerable<ClinicSystem.Models.DrugSell>
 
 @{
     ViewData["Title"] = "DrugSell";
 }
 
-    <h1>Drug Sell</h1>
+<h1>Drug Sell</h1>
 
 <p>
     <a asp-action="Create">Create New</a>

@@ -4,16 +4,17 @@
     ViewData["Title"] = "Index";
 }
 
-    <h1>Patient</h1>
+    <h3>Patient</h3>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
-<form asp-controller="Patients" asp-action="Index">
-    Patient Name:<input type="text" class="form-group" name="searchString" placeholder="Enter Patient Name" />
-    <input type="submit" class="form-group" value="Search Patient" />
+<form class="form-inline" asp-controller="Patients" asp-action="Index">
+    Patient Name:<input type="text" class="form-control" name="searchString" size="15" />
+    <input type="submit" class="form-group btn btn-primary" value="Search" />
 </form>
-<table class="table">
+
+<table class="table" id="myTable">
     <thead>
         <tr>
             <th>
@@ -85,8 +86,9 @@
   
         <script>
             $(document).ready(function () {
-                $("#classList4").addClass("active");
+                $("#classList4").addClass("nav-link active");
             });
+         
         </script>
    
 

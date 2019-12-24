@@ -6,6 +6,17 @@
 <html lang="en">
 
 <head>
+
+    <style>
+        #bg {
+            background-color: rgb(236,240,241);
+            height: 100%;
+        }
+        /* Center and scale the image nicely */
+        li > form > btn:hover {
+            background-color: red;
+        }
+    </style>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>
@@ -20,84 +31,79 @@
 
 
 
-    <link rel="stylesheet" href="~/assets/css/all.css" />
+
     <link rel="stylesheet" href="~/assets/css/style.css" />
     <link rel="stylesheet" href="~/assets/css/animate.css" />
-    <link rel="stylesheet" href="~/assets/css/bootstrap-grid.css" />
-    <link rel="stylesheet" href="~/assets/css/bootstrap-grid.min.css" />
-    <link rel="stylesheet" href="~/assets/css/bootstrap-reboot.css" />
-    <link rel="stylesheet" href="~/assets/css/bootstrap-reboot.min.css" />
-    <link rel="stylesheet" href="~/assets/css/bootstrap.css" />
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/assets/css/carousel.css" />
+    <link rel="stylesheet" href="~/assets/css/bootstrap-touch-slider.css" />
     <link rel="stylesheet" href="~/assets/css/colors.css" />
-    <link rel="stylesheet" href="~/assets/css/font-awesome.css" />
-
+    <link rel="stylesheet" href="~/assets/css/custom.css" />
+    <link rel="stylesheet" href="~/assets/css/flaticon.css" />
     <link rel="stylesheet" href="~/assets/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="~/assets/css/lightbox.css" />
-    <link rel="stylesheet" href="~/assets/css/responsive.css" />
+    <link rel="stylesheet" href="~/assets/css/owl.carousel.css" />
+    <link rel="stylesheet" href="~/assets/css/prettyPhoto.css" />
+    <link rel="stylesheet" href="~/assets/css/versions.css" />
+
+    <link rel="stylesheet" href="~/assets/css/datatables.css" />
+    <link rel="stylesheet" href="~/assets/css/datatables.min.css" />
+
 
     <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
 
 </head>
 
-<body class="">
-    <header class="header transparent-header" style="background-color:green">
-        <div class="container" style="background-image:url(~/assets/images/logo-app.png)">
-            <nav class="navbar navbar-toggleable-md navbar-inverse yamm" id="slide-nav" >
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTopMenu" aria-controls="navbarTopMenu" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <img src="~/assets/images/output-onlinepngtools.png"/>
-                <div class="collapse navbar-collapse" id="navbarTopMenu">
-                    <ul class="navbar-nav mr-auto mt-2 mt-md-0">
-
+<body class="host_version" id="bg">
+    <header class="header header_style_01" style="background-color:rgb(39,174,96);">
+        <nav class="megamenu navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/assets/images/medicalhome.png" alt="image" style="height:50px;width:90px"></a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
                         <li id="classList1">
-                            <a class=" nav-link" asp-area="" asp-controller="Specialities" asp-action="Index"  style="text-align:center">
-                                <i class="ni ni-tv-2 text-primary"></i> Speciality
+                            <a class=" nav-link" asp-area="" asp-controller="Specialities" asp-action="Index" style="text-align:center">
+                                <i class="ni ni-tv-2 text-blue " ></i> Speciality
                             </a>
                         </li>
                         <li id="classList2">
-                            <a class="nav-link " asp-area="" asp-controller="Doctors" asp-action="Index"  style="text-align:center">
+                            <a class="nav-link " asp-area="" asp-controller="Doctors" asp-action="Index" style="text-align:center">
                                 <i class="ni ni-planet text-blue"></i> Doctor
                             </a>
                         </li>
                         <li id="classList3">
                             <a class="nav-link " asp-area="" asp-controller="Schedules" asp-action="Index" style="text-align:center">
-                                <i class="ni ni-planet text-blue"></i> Create Appointment
+                                <i class="ni ni-planet text-blue"></i>  Appointment
                             </a>
                         </li>
                         <li id="classList4">
-                            <a class="nav-link " asp-area="" asp-controller="Patients" asp-action="Index"  style="text-align:center">
-                                <i class="ni ni-pin-3 text-orange"></i> Register Patient
+                            <a class="nav-link " asp-area="" asp-controller="Patients" asp-action="Index" style="text-align:center">
+                                <i class="ni ni-pin-3 text-orange"></i>  Patient
                             </a>
                         </li>
 
                         <li id="classList5">
-                            <a class="nav-link " asp-area="" asp-controller="Appointments" asp-action="Index"  style="text-align:center">
+                            <a class="nav-link " asp-area="" asp-controller="Appointments" asp-action="Index" style="text-align:center">
                                 <i class="ni ni-bullet-list-67 text-red"></i> Appointment
                             </a>
                         </li>
                         <li class="nav-item dropdown has-submenu">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"  style="text-align:center">Drugs</a>
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="text-align:center">Drugs</a>
                             <ul class="dropdown-menu" aria-labelledby="dropdown05">
-                                <li id="classList6"><a class="dropdown-item" asp-area="" asp-controller="Drugs" asp-action="Index"  style="text-align:center">Add Drug</a></li>
-                                <li id="classList7"><a class="dropdown-item"asp-area="" asp-controller="DrugSells" asp-action="Index"  style="text-align:center">Drug Sell</a></li>
-                                
+                                <li id="classList6"><a class="dropdown-item" asp-area="" asp-controller="Drugs" asp-action="Index" style="text-align:center">Add Drug</a></li>
+                                <li id="classList7"><a class="dropdown-item" asp-area="" asp-controller="DrugSells" asp-action="Index" style="text-align:center">Drug Sell</a></li>
+
                             </ul>
                         </li>
 
-                        @*<li id="classList6">
-                            <a class="nav-link " asp-area="" asp-controller="Drugs" asp-action="Index">
-                                <i class="ni ni-bullet-list-67 text-red"></i> Add Drug
-                            </a>
-                        </li>
-                        <li id="classList7">
-                            <a class="nav-link " asp-area="" asp-controller="DrugSells" asp-action="Index">
-                                <i class="ni ni-bullet-list-67 text-red"></i> Drug Sell
-                            </a>
-                        </li>*@
+
                         <li id="classList8">
                             <a class="nav-link " asp-area="" asp-controller="VitalSigns" asp-action="Index">
                                 <i class="ni ni-bullet-list-67 text-red"></i> Vital Sign
@@ -108,38 +114,48 @@
                                 <i class="ni ni-bullet-list-67 text-red"></i> Doctor's Workbench
                             </a>
                         </li>
+
+                    </ul>
+                  
+                </div>
+                <div class="container">
+                    <ul class="nav navbar-nav navbar-right">
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+
+                            <li class="nav-item float-right">
+                                <a class="btn-light btn-radius btn-brd log" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item float-right">
+                                @* <a class="btn-light btn-radius btn-brd log" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">LogOut</a>*@
                                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                    <button type="submit" class="nav-link btn btn-link">Logout</button>
+                                    <button type="submit" class="btn-light btn-radius btn-brd log" style=" text-align:center; background-color:transparent;"> <p class="glyphicon glyphicon-log-out" style="margin-top:5px; background-color:transparent;padding-bottom:6px;">LogOut</p> </button>
                                 </form>
+
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                <a class="btn-light btn-radius btn-brd log" asp-area="Identity" asp-page="/Account/Register">Register</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                <a class="btn-light btn-radius btn-brd log" asp-area="Identity" asp-page="/Account/Login"><i class="flaticon-padlock"></i> Login</a>
                             </li>
                         }
-
+                        @* <li><a class="btn-light btn-radius btn-brd log" href="#" data-toggle="modal" data-target="#login"><i class="flaticon-padlock"></i>  Login</a></li>*@
                     </ul>
-                   
                 </div>
-            </nav>
-        </div><!--/.container inside nav-->
-    </header>
 
-    <div class="container">
-        <main role="main" style="margin-top:150px">
-            @RenderBody()
-        </main>
+            </div>
+        </nav>
+    </header>
+    <div >
+        <div class="container">
+            <main role="main" style="margin-top:50px" >
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
     @*<div class="container-fluid" style="margin-left:18%">
