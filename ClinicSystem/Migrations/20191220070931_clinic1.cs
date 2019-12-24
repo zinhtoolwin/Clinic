@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ClinicSystem.Migrations
 {
-    public partial class Initial_Start : Migration
+    public partial class clinic1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,36 @@ namespace ClinicSystem.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Drugs",
+                columns: table => new
+                {
+                    DrugId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Category = table.Column<string>(nullable: true),
+                    Price = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Drugs", x => x.DrugId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DrugSells",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PatientName = table.Column<string>(nullable: true),
+                    Qty = table.Column<int>(nullable: false),
+                    Total_Price = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DrugSells", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,6 +215,30 @@ namespace ClinicSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DrugSellDrug",
+                columns: table => new
+                {
+                    DrugId = table.Column<int>(nullable: false),
+                    DrugsellId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DrugSellDrug", x => new { x.DrugId, x.DrugsellId });
+                    table.ForeignKey(
+                        name: "FK_DrugSellDrug_Drugs_DrugId",
+                        column: x => x.DrugId,
+                        principalTable: "Drugs",
+                        principalColumn: "DrugId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DrugSellDrug_DrugSells_DrugsellId",
+                        column: x => x.DrugsellId,
+                        principalTable: "DrugSells",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "VitalSigns",
                 columns: table => new
                 {
@@ -245,8 +299,8 @@ namespace ClinicSystem.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DoctorId = table.Column<int>(nullable: false),
                     Day = table.Column<string>(nullable: true),
-                    FromTime = table.Column<DateTime>(nullable: false),
-                    ToTime = table.Column<DateTime>(nullable: false)
+                    FromTime = table.Column<string>(nullable: true),
+                    ToTime = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -342,6 +396,11 @@ namespace ClinicSystem.Migrations
                 column: "SpecialityID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DrugSellDrug_DrugsellId",
+                table: "DrugSellDrug",
+                column: "DrugsellId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Schedules_DoctorId",
                 table: "Schedules",
                 column: "DoctorId");
@@ -373,6 +432,9 @@ namespace ClinicSystem.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "DrugSellDrug");
+
+            migrationBuilder.DropTable(
                 name: "VitalSigns");
 
             migrationBuilder.DropTable(
@@ -383,6 +445,12 @@ namespace ClinicSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Drugs");
+
+            migrationBuilder.DropTable(
+                name: "DrugSells");
 
             migrationBuilder.DropTable(
                 name: "Patients");

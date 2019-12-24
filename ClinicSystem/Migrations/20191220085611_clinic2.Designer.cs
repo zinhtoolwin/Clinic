@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191213065931_test4")]
-    partial class test4
+    [Migration("20191220085611_clinic2")]
+    partial class clinic2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -93,9 +93,49 @@ namespace ClinicSystem.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("ClinicSystem.Models.Drug", b =>
+            modelBuilder.Entity("ClinicSystem.Models.DoctorOrder", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalPrice")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("DoctorOrders");
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.DoctorOrderDrug", b =>
+                {
+                    b.Property<int>("DoctorOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DrugId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DoctorOrderId", "DrugId");
+
+                    b.HasIndex("DrugId");
+
+                    b.ToTable("DoctorOrderDrugs");
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.Drug", b =>
+                {
+                    b.Property<int>("DrugId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -109,24 +149,9 @@ namespace ClinicSystem.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("DrugId");
 
-                    b.ToTable("Drug");
-                });
-
-            modelBuilder.Entity("ClinicSystem.Models.DrugOrder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("OrderName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DrugOrders");
+                    b.ToTable("Drugs");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.DrugSell", b =>
@@ -136,21 +161,18 @@ namespace ClinicSystem.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Frequency")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("PatientName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NoofDay")
-                        .HasColumnType("int");
 
                     b.Property<int>("Qty")
                         .HasColumnType("int");
 
+                    b.Property<int>("Total_Price")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("DrugSell");
+                    b.ToTable("DrugSells");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.DrugSellDrug", b =>
@@ -165,7 +187,7 @@ namespace ClinicSystem.Migrations
 
                     b.HasIndex("DrugsellId");
 
-                    b.ToTable("DrugSellDrug");
+                    b.ToTable("DrugSellDrugs");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.Patient", b =>
@@ -214,11 +236,11 @@ namespace ClinicSystem.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FromTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("FromTime")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ToTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ToTime")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -497,6 +519,36 @@ namespace ClinicSystem.Migrations
                     b.HasOne("ClinicSystem.Models.Speciality", "Speciality")
                         .WithMany("Doctors")
                         .HasForeignKey("SpecialityID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.DoctorOrder", b =>
+                {
+                    b.HasOne("ClinicSystem.Models.Doctor", "Doctor")
+                        .WithMany("DoctorOrders")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClinicSystem.Models.Patient", "Patient")
+                        .WithMany("DoctorOrders")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.DoctorOrderDrug", b =>
+                {
+                    b.HasOne("ClinicSystem.Models.DoctorOrder", "DoctorOrder")
+                        .WithMany("DoctorOrderDrugs")
+                        .HasForeignKey("DoctorOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClinicSystem.Models.Drug", "Drug")
+                        .WithMany("DoctorOrderDrugs")
+                        .HasForeignKey("DrugId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

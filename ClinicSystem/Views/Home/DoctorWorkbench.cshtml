@@ -32,10 +32,14 @@
         <div class="form-group">
             <input type="button" value="Show Appointment" class="btn btn-primary" id="showappointment" />
         </div>
+
+
         <table class="table" id="patientList">
         </table>
 
+        <table class="table" id="drugTable">
 
+        </table>
 
 
 
@@ -106,22 +110,22 @@
         </div>
     </div>
 
-
-    <!-- The Modal Drugs -->
+    <!-- The Modal Drugs -
     <div class="modal fade" id="myModalDrug">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-
-                <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Drugs Orders</h4>
+                    <h4 class="modal-title">Confirm to drug order</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <!-- Modal body -->
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
+                            <input type="hidden" id="DocId" class="form-control" />
+
+                            <input type="hidden" id="PaId" class="form-control" />
+
                             <label class="form-group">Doctor Name</label>
                             <input type="text" id="DocName" class="form-control" />
 
@@ -131,14 +135,16 @@
                     </form>
                 </div>
 
-                <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    
+                    <a class="btn btn-success" asp-action="Create" asp-controller="DoctorOrders">Drug Order</a>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
 
             </div>
         </div>
     </div>
+    -->
 
 </div>
 @section Scripts{ 
@@ -198,7 +204,7 @@
 
                         var clist = result;
                         $.each(clist, function (e, value) {
-                            $("#patientList").append("<tr><td style='display:none;'>" + value.schedule.doctor.id + "</td><td style='display:none;'>" + value.patientId + "</td><td>" + value.schedule.doctor.name + "</td><td>" + value.patient.name + "</td><td>" + value.appointmentDate + "</td><td>" + value.treatementDate + "</td><td> <input onclick='clickVital(this);' type='button' value='Vital Sign' class='btn btn-success' data-toggle='modal' data-target='#myModalVital'></td><td> <input onclick='clickDrug(this);' type='button' value='Drugs Order' class='btn btn-success' data-toggle='modal' data-target='#myModalDrug'></td></tr> ");
+                            $("#patientList").append("<tr><td style='display:none;'>" + value.schedule.doctor.id + "</td><td style='display:none;'>" + value.patientId + "</td><td>" + value.schedule.doctor.name + "</td><td>" + value.patient.name + "</td><td>" + value.appointmentDate + "</td><td>" + value.treatementDate + "</td><td> <input onclick='clickVital(this);' type='button' value='Vital Sign' class='btn btn-success' data-toggle='modal' data-target='#myModalVital'></td><td> <input onclick='clickDrug(this);' type='button' value='Drugs Order' class='btn btn-success'></td></tr> ");
                         });
                     }
                 });
@@ -210,6 +216,8 @@
                     type: 'GET',
                     url: '/api/DoctorTreatment/getVitalByPatient/' + id,
                     success: function (result) {
+                        
+
                         var clist = result;
                         $.each(clist, function (e, value) {
                             $("#Pname").val(value.patient.name);
@@ -227,11 +235,25 @@
             }
 
             function clickDrug(e) {
-                var doctorName = $(e).closest("tr").find('td:eq(2)').text();
-                var patientName = $(e).closest("tr").find('td:eq(3)').text();
-                document.getElementById("DocName").value = doctorName;
-                document.getElementById("PaName").value = patientName;
+                var PaId=$(e).closest("tr").find('td:eq(1)').text();
+                alert(PaId);
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/DoctorTreatment/getDrugsTableByPatientId/' + PaId,
+                    success: function (result) {
+                        //refresh
+                        $("#drugTable").html("").append("<tr><td>Doctor Name</td><td>Patient Name</td><td>Drugs</td></tr>");
+
+                        var clist = result;
+                        $.each(clist, function (e, value) {
+                            $("#drugTable").append("<tr><td>"+value.doctorOrder.doctor.name+"</td><td>"+value.doctorOrder.patient.name+"</td><td>"+value.drug.name+"</td></tr>");
+
+                        });
+                    }
+                });
             }
+
+            
 
 
 

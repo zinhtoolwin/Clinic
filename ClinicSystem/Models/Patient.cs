@@ -8,6 +8,7 @@ namespace ClinicSystem.Models
 {
     public class Patient
     {
+        
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
@@ -22,5 +23,7 @@ namespace ClinicSystem.Models
         public ICollection<VitalSign> VitalSigns { get; set; }
 
         public ICollection<Appointment> Appointments { get; set; }
+
+        public ICollection<DoctorOrder> DoctorOrders { get; set; }
     }
 }

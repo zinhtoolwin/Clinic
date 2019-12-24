@@ -17,11 +17,7 @@ namespace ClinicSystem.Models
         public int Qty { get; set; }
         public int Total_Price { get; set; }
 
-        //public string DrugName { get; set; }
-        //public int DrugPrice { get; set; }
-        //public int DrugQty { get; set; }
-        //public int Total_Amt { get; set; }
-
+        //for extra patient
         public ICollection<DrugSellDrug> DrugSellDrugs { get; set; }
         
         

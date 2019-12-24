@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191219161045_test12")]
-    partial class test12
+    [Migration("20191220070931_clinic1")]
+    partial class clinic1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,7 +95,7 @@ namespace ClinicSystem.Migrations
 
             modelBuilder.Entity("ClinicSystem.Models.Drug", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("DrugId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -109,24 +109,9 @@ namespace ClinicSystem.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("DrugId");
 
-                    b.ToTable("Drug");
-                });
-
-            modelBuilder.Entity("ClinicSystem.Models.DrugOrder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("OrderName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DrugOrders");
+                    b.ToTable("Drugs");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.DrugSell", b =>
@@ -136,22 +121,10 @@ namespace ClinicSystem.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DrugName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DrugPrice")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DrugQty")
-                        .HasColumnType("int");
-
                     b.Property<string>("PatientName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Qty")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Total_Amt")
                         .HasColumnType("int");
 
                     b.Property<int>("Total_Price")
@@ -159,7 +132,7 @@ namespace ClinicSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DrugSell");
+                    b.ToTable("DrugSells");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.DrugSellDrug", b =>
@@ -174,7 +147,7 @@ namespace ClinicSystem.Migrations
 
                     b.HasIndex("DrugsellId");
 
-                    b.ToTable("DrugSellDrugs");
+                    b.ToTable("DrugSellDrug");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.Patient", b =>
@@ -223,11 +196,11 @@ namespace ClinicSystem.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FromTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("FromTime")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ToTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ToTime")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

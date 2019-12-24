@@ -11,6 +11,8 @@ namespace ClinicSystem.Models
         public Drug()
         {
             DrugSellDrugs = new List<DrugSellDrug>();
+
+            DoctorOrderDrugs = new List<DoctorOrderDrug>();
         }
         public int DrugId { get; set; }
         public string Name { get; set; }
@@ -19,7 +21,11 @@ namespace ClinicSystem.Models
 
         public int Price { get; set; }
         
+        //for Extra Patient
         public ICollection<DrugSellDrug> DrugSellDrugs { get; set; }
+
+        //for Clinic Patient
+        public ICollection<DoctorOrderDrug> DoctorOrderDrugs { get; set; }
        
     }
 }
