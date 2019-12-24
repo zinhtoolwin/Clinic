@@ -1,10 +1,13 @@
-﻿@model IEnumerable<ClinicSystem.Models.DrugSell>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model IEnumerable<ClinicSystem.Models.DrugSell>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "DrugSell";
 }
 
-<h1>Index</h1>
+<h1>Drug Sell</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -26,33 +29,41 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PatientName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Qty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Total_Price)
-            </td>
-            <td>
-                @{
-                    string cs = "";
-                    foreach (DrugSellDrug sc in item.DrugSellDrugs.ToList())
-                    {
-                        cs += sc.Drug.Name + " ,";
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PatientName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Qty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total_Price)
+                </td>
+                <td>
+                    @{
+                        string cs = "";
+                        foreach (DrugSellDrug sc in item.DrugSellDrugs.ToList())
+                        {
+                            cs += sc.Drug.Name + " ,";
+                        }
+                        <label>@cs</label>
                     }
-                    <label>@cs</label>
-                }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#classList7").addClass("active");
+        });
+    </script>
+}

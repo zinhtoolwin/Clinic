@@ -4,9 +4,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
-<h4>VitalSign</h4>
+
+<h3>VitalSign</h3>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -17,32 +17,32 @@
                 <select asp-for="PatientId" class ="form-control" asp-items="ViewBag.PatientId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Height" class="control-label"></label>
+                <label asp-for="Height" class="control-label"> Height(cm) </label>
                 <input asp-for="Height" class="form-control" />
                 <span asp-validation-for="Height" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Weight" class="control-label"></label>
+                <label asp-for="Weight" class="control-label"> Weight(Lb)</label>
                 <input asp-for="Weight" class="form-control" />
                 <span asp-validation-for="Weight" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Temperature" class="control-label"></label>
+                <label asp-for="Temperature" class="control-label"> Temperature(F)</label>
                 <input asp-for="Temperature" class="form-control" />
                 <span asp-validation-for="Temperature" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BloodSugar" class="control-label"></label>
+                <label asp-for="BloodSugar" class="control-label"> BloodSugar(mg/dL)</label>
                 <input asp-for="BloodSugar" class="form-control" />
                 <span asp-validation-for="BloodSugar" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BloodPressureUNo" class="control-label"></label>
+                <label asp-for="BloodPressureUNo"  class="control-label">UpperBloodPressure(mmHg)</label>
                 <input asp-for="BloodPressureUNo" class="form-control" />
                 <span asp-validation-for="BloodPressureUNo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BloodPressureLNo" class="control-label"></label>
+                <label asp-for="BloodPressureLNo" class="control-label">LowerBloodPressure(mmHg)</label>
                 <input asp-for="BloodPressureLNo" class="form-control" />
                 <span asp-validation-for="BloodPressureLNo" class="text-danger"></span>
             </div>

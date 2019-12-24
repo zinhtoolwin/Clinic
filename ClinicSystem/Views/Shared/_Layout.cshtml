@@ -6,182 +6,169 @@
 <html lang="en">
 
 <head>
+
+    <style>
+        #bg {
+            background-color: rgb(236,240,241);
+            height: 100%;
+        }
+        /* Center and scale the image nicely */
+        li > form > btn:hover {
+            background-color: red;
+        }
+    </style>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>
         @ViewData["Title"]-Argon Dashboard - Free Dashboard for Bootstrap 4 by Creative Tim
     </title>
-    <link href="~/assets/img/brand/favicon.png" rel="icon" type="image/png">
-    <link href="~/assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
-    <link href="~/assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+
+
+
+
+
+    <link rel="stylesheet" href="~/assets/css/style.css" />
+    <link rel="stylesheet" href="~/assets/css/animate.css" />
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/css/bootstrap-touch-slider.css" />
+    <link rel="stylesheet" href="~/assets/css/colors.css" />
+    <link rel="stylesheet" href="~/assets/css/custom.css" />
+    <link rel="stylesheet" href="~/assets/css/flaticon.css" />
+    <link rel="stylesheet" href="~/assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/assets/css/owl.carousel.css" />
+    <link rel="stylesheet" href="~/assets/css/prettyPhoto.css" />
+    <link rel="stylesheet" href="~/assets/css/versions.css" />
+
+    <link rel="stylesheet" href="~/assets/css/datatables.css" />
+    <link rel="stylesheet" href="~/assets/css/datatables.min.css" />
+
 
     <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
 
-   
-
- 
-
-
 </head>
 
-<body class="">
-    <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark bg-dark" id="sidenav-main">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand pt-0" href="./index.html">
-                <img src="~/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
-            </a>
-
-            <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-                <div class="navbar-collapse-header d-md-none">
-                    <div class="row">
-                        <div class="col-6 collapse-brand">
-                            <a href="./index.html">
-                                <img src="~/assets/img/brand/blue.png">
-                            </a>
-                        </div>
-                        <div class="col-6 collapse-close">
-                            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
-                                <span></span>
-                                <span></span>
-                            </button>
-                        </div>
-                    </div>
+<body class="host_version" id="bg">
+    <header class="header header_style_01" style="background-color:rgb(39,174,96);">
+        <nav class="megamenu navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/assets/images/medicalhome.png" alt="image" style="height:50px;width:90px"></a>
                 </div>
-                <form class="mt-4 mb-3 d-md-none">
-                    <div class="input-group input-group-rounded input-group-merge">
-                        <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <span class="fa fa-search"></span>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class=" nav-link" asp-area="" asp-controller="Specialities" asp-action="Index">
-                            <i class="ni ni-tv-2 text-primary"></i> Specialized
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " asp-area="" asp-controller="Doctors" asp-action="Index">
-                            <i class="ni ni-planet text-blue"></i> Doctor
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " asp-area="" asp-controller="Schedules" asp-action="Index">
-                            <i class="ni ni-planet text-blue"></i> Schedule
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " asp-area="" asp-controller="Patients" asp-action="Index">
-                            <i class="ni ni-pin-3 text-orange"></i> Patients(Register)
-                        </a>
-                    </li>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li id="classList1">
+                            <a class=" nav-link" asp-area="" asp-controller="Specialities" asp-action="Index" style="text-align:center">
+                                <i class="ni ni-tv-2 text-blue " ></i> Speciality
+                            </a>
+                        </li>
+                        <li id="classList2">
+                            <a class="nav-link " asp-area="" asp-controller="Doctors" asp-action="Index" style="text-align:center">
+                                <i class="ni ni-planet text-blue"></i> Doctor
+                            </a>
+                        </li>
+                        <li id="classList3">
+                            <a class="nav-link " asp-area="" asp-controller="Schedules" asp-action="Index" style="text-align:center">
+                                <i class="ni ni-planet text-blue"></i>  Appointment
+                            </a>
+                        </li>
+                        <li id="classList4">
+                            <a class="nav-link " asp-area="" asp-controller="Patients" asp-action="Index" style="text-align:center">
+                                <i class="ni ni-pin-3 text-orange"></i>  Patient
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link " asp-area="" asp-controller="Appointments" asp-action="Index">
-                            <i class="ni ni-bullet-list-67 text-red"></i> AppointmentSSS
-                        </a>
-                    </li>
+                        <li id="classList5">
+                            <a class="nav-link " asp-area="" asp-controller="Appointments" asp-action="Index" style="text-align:center">
+                                <i class="ni ni-bullet-list-67 text-red"></i> Appointment
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown has-submenu">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="text-align:center">Drugs</a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown05">
+                                <li id="classList6"><a class="dropdown-item" asp-area="" asp-controller="Drugs" asp-action="Index" style="text-align:center">Add Drug</a></li>
+                                <li id="classList7"><a class="dropdown-item" asp-area="" asp-controller="DrugSells" asp-action="Index" style="text-align:center">Drug Sell</a></li>
 
-                    <li class="nav-item">
-                        <a class="nav-link " asp-area="" asp-controller="Drugs" asp-action="Index">
-                            <i class="ni ni-bullet-list-67 text-red"></i> Add Drug
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " asp-area="" asp-controller="DrugSells" asp-action="Index">
-                            <i class="ni ni-bullet-list-67 text-red"></i> Drug Sell
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " asp-area="" asp-controller="VitalSigns" asp-action="Index">
-                            <i class="ni ni-bullet-list-67 text-red"></i> VitalSign
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="DoctorWorkbench">
-                            <i class="ni ni-bullet-list-67 text-red"></i> DoctorWorkbench
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " asp-area="" asp-controller="DoctorOrders" asp-action="Index">
-                            <i class="ni ni-bullet-list-67 text-red"></i> Doctor Order
-                        </a>
-                    </li>
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                <button type="submit" class="nav-link btn btn-link">Logout</button>
-                            </form>
+
+
+                        <li id="classList8">
+                            <a class="nav-link " asp-area="" asp-controller="VitalSigns" asp-action="Index">
+                                <i class="ni ni-bullet-list-67 text-red"></i> Vital Sign
+                            </a>
                         </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        <li id="classList9">
+                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="DoctorWorkbench">
+                                <i class="ni ni-bullet-list-67 text-red"></i> Doctor's Workbench
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                        </li>
-                    }
-                </ul>
-                <!-- Divider -->
-                <hr class="my-3">
-                <!-- Heading -->
-                <h6 class="navbar-heading text-muted">Documentation</h6>
-                <!-- Navigation -->
-                <ul class="navbar-nav mb-md-3">
-                    <li class="nav-item">
-                        <a class="nav-link">
-                            <i class="ni ni-spaceship"></i> Getting started
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">
-                            <i class="ni ni-palette"></i> Foundation
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">
-                            <i class="ni ni-ui-04"></i> Components
-                        </a>
-                    </li>
-                </ul>
+
+                    </ul>
+                  
+                </div>
+                <div class="container">
+                    <ul class="nav navbar-nav navbar-right">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+
+                            <li class="nav-item float-right">
+                                <a class="btn-light btn-radius btn-brd log" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name</a>
+                            </li>
+                            <li class="nav-item float-right">
+                                @* <a class="btn-light btn-radius btn-brd log" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">LogOut</a>*@
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button type="submit" class="btn-light btn-radius btn-brd log" style=" text-align:center; background-color:transparent;"> <p class="glyphicon glyphicon-log-out" style="margin-top:5px; background-color:transparent;padding-bottom:6px;">LogOut</p> </button>
+                                </form>
+
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="btn-light btn-radius btn-brd log" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn-light btn-radius btn-brd log" asp-area="Identity" asp-page="/Account/Login"><i class="flaticon-padlock"></i> Login</a>
+                            </li>
+                        }
+                        @* <li><a class="btn-light btn-radius btn-brd log" href="#" data-toggle="modal" data-target="#login"><i class="flaticon-padlock"></i>  Login</a></li>*@
+                    </ul>
+                </div>
+
             </div>
+        </nav>
+    </header>
+    <div >
+        <div class="container">
+            <main role="main" style="margin-top:50px" >
+                @RenderBody()
+            </main>
         </div>
-    </nav>
-
-    <div class="container-fluid" style="margin-left:18%">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
     </div>
+
+    @*<div class="container-fluid" style="margin-left:18%">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>*@
 
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/assets/js/plugins/jquery/dist/jquery.min.js"></script>
-    <script src="~/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="~/assets/js/plugins/chart.js/dist/Chart.min.js"></script>
-    <script src="~/assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
-    <script src="~/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
-
+    <script src="~/assets/js/map.js"></script>
+    <script src="~/assets/js/script.js"></script>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

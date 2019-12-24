@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-green">Appointment List</h1>
+<h3 class="text-green">Appointment List</h3>
 
 <p>
     <a class="btn btn-primary" asp-action="Create">Create New</a>
@@ -12,9 +12,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                No
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Patient)
             </th>
@@ -22,21 +20,21 @@
                 Doctor Name
             </th>
             @*<th>
-                Specialized
-            </th>*@
+                    Specialized
+                </th>*@
             @*@<th>
-                Schedule Day
-                <!--  Html.DisplayNameFor(model => model.Schedule)     -->
-            </th>*@
+                    Schedule Day
+                    <!--  Html.DisplayNameFor(model => model.Schedule)     -->
+                </th>*@
             @*<th>
-                Schedule Part Time(From)
-            </th>
-            <th>
-                Schedule Part Time(End)
-            </th>*@
+                    Schedule Part Time(From)
+                </th>
+                <th>
+                    Schedule Part Time(End)
+                </th>*@
             @*<th>
-                @Html.DisplayNameFor(model => model.AppointmentDate)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.AppointmentDate)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.TreatementDate)
             </th>
@@ -47,42 +45,49 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.Patient.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Schedule.Doctor.Name)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Schedule.Doctor.Speciality.Name)
-            </td>*@
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Schedule.Day)
-            </td>*@
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Schedule.FromTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Schedule.ToTime)
-            </td>*@
-            @*<td>
-                @Html.DisplayFor(modelItem => item.AppointmentDate)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.TreatementDate)
-            </td>
-            <td>
-                <a class="btn btn-secondary" asp-controller="VitalSigns" asp-action="Create" asp-route-id="@item.PatientId">Vital Sign</a>
-            </td>
-            <td>
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a class="btn btn-success" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a> 
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Patient.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Schedule.Doctor.Name)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Schedule.Doctor.Speciality.Name)
+                    </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Schedule.Day)
+                    </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Schedule.FromTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Schedule.ToTime)
+                    </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.AppointmentDate)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.TreatementDate)
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="VitalSigns" asp-action="Create" asp-route-id="@item.PatientId">Vital Sign</a>
+                </td>
+                <td>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class="btn btn-success" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a> 
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#classList5").addClass("active");
+        });
+    </script>
+}

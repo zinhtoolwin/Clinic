@@ -1,14 +1,23 @@
-﻿@model IEnumerable<ClinicSystem.Models.Drug>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model IEnumerable<ClinicSystem.Models.Drug>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Drug";
 }
 
-<h1>Index</h1>
+<h3>Drug</h3>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
+<form class="form-inline" asp-controller="Drugs" asp-action="Index">
+    <p>
+        <input type="text" class="form-control" name="searchString" />
+        <input type="submit" class="btn btn-primary" value="Search" />
+    </p>
+</form>
 <table class="table" id="myTable" style="z-index:-100;">
     <thead>
         <tr>
@@ -38,22 +47,18 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.DrugId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.DrugId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.DrugId">Delete</a>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.DrugId">Edit</a> |
+                    <a class="btn btn-success" asp-action="Details" asp-route-id="@item.DrugId">Details</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.DrugId">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 @section Scripts{
-
     <script>
-         $(document).ready( function () {
-             $('#myTable').DataTable(
-                 {
-
-                 } );
-    } );
+        $(document).ready(function () {
+            $("#classList6").addClass("active");
+        });
     </script>
 }

@@ -159,37 +159,37 @@
                                 $("#sname").append("<option value=" + value.id + ">" + value.name + "</option>");
                             });
 
-                        }
+                }
+            });
+        }
+        function callDoctorBySpecial(specialId) {
+            $.ajax({
+                type: 'GET',
+                url: '/api/DoctorTreatment/getDoctorBySpecial/' + specialId,
+                success: function (result) {
+                    //refresh
+                    $("#dname").html("").append("<option value='0'>Select Doctor</option>");
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#dname").append("<option value=" + value.id + ">" + value.name + "</option>");
                     });
-            }
-            function callDoctorBySpecial(specialId) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/DoctorTreatment/getDoctorBySpecial/' + specialId,
-                    success: function (result) {
-                        //refresh
-                      $("#dname").html("").append("<option value='0'>Select Doctor</option>");
-                        var clist = result;
-                        $.each(clist, function (e, value) {
-                            $("#dname").append("<option value=" + value.id + ">" + value.name + "</option>");
-                        });
-                    }
-                });
-            }
-            function callPartByDoctor(doctorId) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/DoctorTreatment/getPartByDoctor/' + doctorId,
-                    success: function (result) {
-                        //refresh
-                         $("#dayname").html("").append("<option value='0'>Select Day Part</option>");
-                        var clist = result;
-                        $.each(clist, function (e, value) {
-                            $("#dayname").append("<option value=" + value.id + ">" + value.day + "</option>");
-                        });
-                    }
-                });
-            }
+                }
+            });
+        }
+        function callPartByDoctor(doctorId) {
+            $.ajax({
+                type: 'GET',
+                url: '/api/DoctorTreatment/getPartByDoctor/' + doctorId,
+                success: function (result) {
+                    //refresh
+                    $("#dayname").html("").append("<option value='0'>Select Day Part</option>");
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#dayname").append("<option value=" + value.id + ">" + value.day + "</option>");
+                    });
+                }
+            });
+        }
 
             
 
@@ -282,6 +282,12 @@
            
 
 
-        </script>
-
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#classList9").addClass("active");
+        });
+    </script>
 }
+
+

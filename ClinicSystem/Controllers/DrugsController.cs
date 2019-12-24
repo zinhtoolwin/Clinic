@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicSystem.Data;
 using ClinicSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ClinicSystem.Controllers
 {
+    [Authorize]
     public class DrugsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,9 +22,15 @@ namespace ClinicSystem.Controllers
         }
 
         // GET: Drugs
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
+            
         {
-            return View(await _context.Drugs.ToListAsync());
+            var drugs = from p in _context.Drugs select p;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                drugs = drugs.Where(s => s.Name.Contains(searchString));
+            }
+            return View(await drugs.ToListAsync());
         }
 
         // GET: Drugs/Details/5

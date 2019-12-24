@@ -129,6 +129,7 @@ namespace ClinicSystem.Migrations
                     b.HasIndex("DrugId");
 
                     b.ToTable("DoctorOrderDrugs");
+                    b.ToTable("Drugs");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.Drug", b =>
@@ -185,7 +186,7 @@ namespace ClinicSystem.Migrations
 
                     b.HasIndex("DrugsellId");
 
-                    b.ToTable("DrugSellDrugs");
+                    b.ToTable("DrugSellDrug");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.Patient", b =>
