@@ -242,7 +242,7 @@
                     url: '/api/DoctorTreatment/getDrugsTableByPatientId/' + PaId,
                     success: function (result) {
                         //refresh
-                        $("#drugTable").html("").append("<tr><td>Doctor Name</td><td>Patient Name</td><td>Drugs</td></tr>");
+                        $("#drugTable").html("").append("<tr><th>Doctor Name</th><th>Patient Name</th><th>Drugs</th></tr>");
 
                         var clist = result;
                         $.each(clist, function (e, value) {

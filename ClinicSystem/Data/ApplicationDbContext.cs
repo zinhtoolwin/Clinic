@@ -62,9 +62,6 @@ namespace ClinicSystem.Data
         public DbSet<DrugSell> DrugSells { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
-
-        public DbSet<Drug> Drugs { get; set; }
-        public DbSet<DrugSell> DrugSells { get; set; }
         public DbSet<DrugSellDrug> DrugSellDrugs { get; set; }
 
         public DbSet<DoctorOrder> DoctorOrders { get; set; }
