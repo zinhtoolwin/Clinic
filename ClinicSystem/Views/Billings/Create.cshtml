@@ -1,0 +1,113 @@
+﻿@model ClinicSystem.Models.DrugOrderViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Expense Bill</h4>
+<hr />
+<div class="row">
+    <form asp-action="Create">
+        <div class="col-sm-12">
+
+            <div class="card col-sm-6">
+                <div asp-for="" class="card-body">
+                    <label asp-for="Patient.Name" class="control-label">Patient's Name</label>
+                    <input readonly asp-for="Patient.Name" class="form-control" />
+                    <span asp-validation-for="Patient.Name" class="text-danger"></span>
+                </div>
+                <br>
+            </div>
+            <div class="card col-sm-6">
+                <div asp-for="" class="card-body">
+                    <label asp-for="Doctor.Name" class="control-label">Doctor's Name</label>
+                    <input readonly asp-for="Doctor.Name" class="form-control" />
+                    <span asp-validation-for="Doctor.Name" class="text-danger"></span>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="card col-sm-6" style="margin-bottom:10px;">
+            <div asp-for="" class="card-body">
+                <label class="control-label">Doctor's Fee</label>
+                <input asp-for="DoctorFee" class="form-control" type="text" />
+                <span class="text-danger"></span>
+            </div>
+
+        </div>
+        <br />
+        <div class="col-sm-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            Drug Name
+                        </th>
+                        <th>
+                            Price
+                        </th>
+
+                        <th>Total Qty</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        for (int i = 0; i < Model.DrugOrderList.Count; i++)
+                        {
+
+
+                            <tr>
+
+                                <td>
+
+                                    <label id="a@(Model.DrugOrderList[i].DrugIdd)">@Model.DrugOrderList[i].DrugName </label>
+
+
+                                    <input id="id@(Model.DrugOrderList[i].DrugIdd)" type="hidden" asp-for="DrugOrderList[i].DrugName" />
+                                    <input type="hidden" id="@(Model.DrugOrderList[i].DrugIdd)" />
+
+                                </td>
+                                <td> <label name="tes" id="p@(Model.DrugOrderList[i].DrugIdd)">@Model.DrugOrderList[i].Price</label></td>
+
+                                <td>
+                                    <label id="t@(Model.DrugOrderList[i].DrugIdd)">@Model.DrugOrderList[i].Total_Amt</label>
+                                </td>
+                                <td>
+                                    <label id="t@(Model.DrugOrderList[i].DrugIdd)">@Model.DrugOrderList[i].Total_AmtandQty</label>
+                                </td>
+                            </tr>
+
+
+                        }
+                    }
+                </tbody>
+
+
+            </table>
+
+        </div>
+        <div class="col-sm-6">
+            <input type="submit" value="Create"  class="btn btn-primary" />
+        </div>
+
+
+        <div class="col-sm-6">
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+@section Scripts
+    
+    { 
+
+        <script>
+          
+        </script>
+
+    }

@@ -4,12 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Vital Sign</h1>
+<h3>Vital Sign</h3>
 
 @*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
-<table class="table">
+        <a asp-action="Create">Create New</a>
+    </p>*@
+<table class="table" id="myTable">
     <thead>
         <tr>
             <th>
@@ -75,6 +75,12 @@
     <script>
         $(document).ready(function () {
             $("#classList8").addClass("active");
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable(
+            );
         });
     </script>
 }

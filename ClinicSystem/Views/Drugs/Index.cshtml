@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @model IEnumerable<ClinicSystem.Models.Drug>
 
 @{
@@ -12,13 +12,8 @@
 <p>
     <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
-<form class="form-inline" asp-controller="Drugs" asp-action="Index">
-    <p>
-        <input type="text" class="form-control" name="searchString" />
-        <input type="submit" class="btn btn-primary" value="Search" />
-    </p>
-</form>
-<table class="table" id="myTable" style="z-index:-100;">
+
+<table class="table" id="myTable">
     <thead>
         <tr>
             <th>
@@ -59,6 +54,12 @@
     <script>
         $(document).ready(function () {
             $("#classList6").addClass("active");
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable(
+            );
         });
     </script>
 }

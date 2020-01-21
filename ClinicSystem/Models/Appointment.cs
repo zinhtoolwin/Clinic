@@ -20,6 +20,7 @@ namespace ClinicSystem.Models
         public int ScheduleId { get; set; }
         public Schedule Schedule { get; set; }
 
+       
 
 
         public DateTime AppointmentDate { get; set; }

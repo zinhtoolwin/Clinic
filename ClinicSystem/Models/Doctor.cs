@@ -12,6 +12,7 @@ namespace ClinicSystem.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+        
 
         [ForeignKey("Speciality")]
         public int SpecialityID { get; set; }
@@ -26,6 +27,9 @@ namespace ClinicSystem.Models
         public DateTime ToDate { get; set; }
         public string Email { get; set; }
         public int PhoneNo { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+        public string UserId { get; set; }
 
 
         public ICollection<Schedule> Schedules { get; set; }

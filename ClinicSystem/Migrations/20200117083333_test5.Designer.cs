@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191220065336_test1")]
-    partial class test1
+    [Migration("20200117083333_test5")]
+    partial class test5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,32 @@ namespace ClinicSystem.Migrations
                     b.HasIndex("ScheduleId");
 
                     b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.Billing", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DoctorFee")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Billings");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.Doctor", b =>
@@ -86,9 +112,14 @@ namespace ClinicSystem.Migrations
                     b.Property<DateTime>("ToDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SpecialityID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Doctors");
                 });
@@ -112,6 +143,37 @@ namespace ClinicSystem.Migrations
                     b.HasKey("DrugId");
 
                     b.ToTable("Drugs");
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.DrugOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DrugId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Frequency")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Total_Qty")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DrugId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("DrugOrders");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.DrugSell", b =>
@@ -148,6 +210,34 @@ namespace ClinicSystem.Migrations
                     b.HasIndex("DrugsellId");
 
                     b.ToTable("DrugSellDrug");
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsBillClear")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VoucherId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("ClinicSystem.Models.Patient", b =>
@@ -196,11 +286,11 @@ namespace ClinicSystem.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FromTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("FromTime")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ToTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ToTime")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -322,6 +412,10 @@ namespace ClinicSystem.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -373,6 +467,8 @@ namespace ClinicSystem.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -459,6 +555,19 @@ namespace ClinicSystem.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ClinicSystem.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
             modelBuilder.Entity("ClinicSystem.Models.Appointment", b =>
                 {
                     b.HasOne("ClinicSystem.Models.Patient", "Patient")
@@ -474,11 +583,39 @@ namespace ClinicSystem.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ClinicSystem.Models.Billing", b =>
+                {
+                    b.HasOne("ClinicSystem.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ClinicSystem.Models.Doctor", b =>
                 {
                     b.HasOne("ClinicSystem.Models.Speciality", "Speciality")
                         .WithMany("Doctors")
                         .HasForeignKey("SpecialityID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClinicSystem.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.DrugOrder", b =>
+                {
+                    b.HasOne("ClinicSystem.Models.Drug", "Drug")
+                        .WithMany("DrugOrders")
+                        .HasForeignKey("DrugId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClinicSystem.Models.Order", "Order")
+                        .WithMany("DrugOrders")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -494,6 +631,21 @@ namespace ClinicSystem.Migrations
                     b.HasOne("ClinicSystem.Models.DrugSell", "DrugSell")
                         .WithMany("DrugSellDrugs")
                         .HasForeignKey("DrugsellId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.Order", b =>
+                {
+                    b.HasOne("ClinicSystem.Models.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClinicSystem.Models.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

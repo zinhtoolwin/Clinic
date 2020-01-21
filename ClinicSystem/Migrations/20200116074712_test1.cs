@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ClinicSystem.Migrations
 {
-    public partial class Initial_Start : Migration
+    public partial class test1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,11 +39,44 @@ namespace ClinicSystem.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: true),
+                    Active = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Drugs",
+                columns: table => new
+                {
+                    DrugId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Category = table.Column<string>(nullable: true),
+                    Price = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Drugs", x => x.DrugId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DrugSells",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PatientName = table.Column<string>(nullable: true),
+                    Qty = table.Column<int>(nullable: false),
+                    Total_Price = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DrugSells", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,6 +218,30 @@ namespace ClinicSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DrugSellDrug",
+                columns: table => new
+                {
+                    DrugId = table.Column<int>(nullable: false),
+                    DrugsellId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DrugSellDrug", x => new { x.DrugId, x.DrugsellId });
+                    table.ForeignKey(
+                        name: "FK_DrugSellDrug_Drugs_DrugId",
+                        column: x => x.DrugId,
+                        principalTable: "Drugs",
+                        principalColumn: "DrugId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DrugSellDrug_DrugSells_DrugsellId",
+                        column: x => x.DrugsellId,
+                        principalTable: "DrugSells",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "VitalSigns",
                 columns: table => new
                 {
@@ -224,7 +281,8 @@ namespace ClinicSystem.Migrations
                     FromDate = table.Column<DateTime>(nullable: false),
                     ToDate = table.Column<DateTime>(nullable: false),
                     Email = table.Column<string>(nullable: true),
-                    PhoneNo = table.Column<int>(nullable: false)
+                    PhoneNo = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -233,6 +291,39 @@ namespace ClinicSystem.Migrations
                         name: "FK_Doctors_Specialities_SpecialityID",
                         column: x => x.SpecialityID,
                         principalTable: "Specialities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Doctors_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Order",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PatientId = table.Column<int>(nullable: false),
+                    DoctorId = table.Column<int>(nullable: false),
+                    IsBillClear = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Order_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Order_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -245,8 +336,8 @@ namespace ClinicSystem.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DoctorId = table.Column<int>(nullable: false),
                     Day = table.Column<string>(nullable: true),
-                    FromTime = table.Column<DateTime>(nullable: false),
-                    ToTime = table.Column<DateTime>(nullable: false)
+                    FromTime = table.Column<string>(nullable: true),
+                    ToTime = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -255,6 +346,35 @@ namespace ClinicSystem.Migrations
                         name: "FK_Schedules_Doctors_DoctorId",
                         column: x => x.DoctorId,
                         principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DrugOrders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DrugId = table.Column<int>(nullable: false),
+                    OrderId = table.Column<int>(nullable: false),
+                    Qty = table.Column<int>(nullable: false),
+                    Total_Qty = table.Column<int>(nullable: false),
+                    Frequency = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DrugOrders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DrugOrders_Drugs_DrugId",
+                        column: x => x.DrugId,
+                        principalTable: "Drugs",
+                        principalColumn: "DrugId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DrugOrders_Order_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Order",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -285,6 +405,29 @@ namespace ClinicSystem.Migrations
                         principalTable: "Schedules",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Billings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DOrderId = table.Column<int>(nullable: false),
+                    DrugOrderId = table.Column<int>(nullable: true),
+                    DoctorFee = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Billings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Billings_DrugOrders_DrugOrderId",
+                        column: x => x.DrugOrderId,
+                        principalTable: "DrugOrders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -337,9 +480,44 @@ namespace ClinicSystem.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Billings_DrugOrderId",
+                table: "Billings",
+                column: "DrugOrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Doctors_SpecialityID",
                 table: "Doctors",
                 column: "SpecialityID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Doctors_UserId",
+                table: "Doctors",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DrugOrders_DrugId",
+                table: "DrugOrders",
+                column: "DrugId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DrugOrders_OrderId",
+                table: "DrugOrders",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DrugSellDrug_DrugsellId",
+                table: "DrugSellDrug",
+                column: "DrugsellId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Order_DoctorId",
+                table: "Order",
+                column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Order_PatientId",
+                table: "Order",
+                column: "PatientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Schedules_DoctorId",
@@ -373,6 +551,12 @@ namespace ClinicSystem.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Billings");
+
+            migrationBuilder.DropTable(
+                name: "DrugSellDrug");
+
+            migrationBuilder.DropTable(
                 name: "VitalSigns");
 
             migrationBuilder.DropTable(
@@ -382,16 +566,28 @@ namespace ClinicSystem.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "DrugOrders");
 
             migrationBuilder.DropTable(
-                name: "Patients");
+                name: "DrugSells");
+
+            migrationBuilder.DropTable(
+                name: "Drugs");
+
+            migrationBuilder.DropTable(
+                name: "Order");
 
             migrationBuilder.DropTable(
                 name: "Doctors");
 
             migrationBuilder.DropTable(
+                name: "Patients");
+
+            migrationBuilder.DropTable(
                 name: "Specialities");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

@@ -1,0 +1,169 @@
+﻿@model IEnumerable<ClinicSystem.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Doctor's WorkBench</h3>
+<style>
+    /* Important part */
+    .modal-dialog {
+        overflow - y: initial !important;
+    }
+
+    .modal-body {
+        height: 250px;
+        overflow-y: auto;
+    }
+</style>
+<p>
+    
+</p>
+<table class="table" id="myTable">
+    <thead>
+
+        <tr>
+            <th>
+                Patient
+                @Html.DisplayNameFor(model => model.Patient.Name)
+            </th>
+            <th>
+                Doctor
+                @Html.DisplayNameFor(model => model.Schedule.Doctor.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TreatementDate)
+            </th>
+            <th>
+                Vital Sign
+            </th>
+            <th>
+                Order Drug
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td id="@item.Patient.Id">
+                @Html.DisplayFor(modelItem => item.Patient.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Schedule.Doctor.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.TreatementDate)
+            </td>
+            <td>
+                <input id="@item.Patient.Id" onclick='clickVital(this,"@item.Patient.Id");' type='button' value='Vital Sign' class='btn btn-success' data-toggle='modal' data-target='#myModalVital'>
+            </td>
+            <td>
+                <a class="btn btn-primary" asp-area="" asp-controller="Orders" asp-action="Create" asp-route-id="@item.Id">Order Drug</a>
+            </td>
+            @*href="/Doctors/Details/@item.Id"*@
+            <td>
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a class="btn btn-success" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<!-- The Modal Vital -->
+<div class="modal fade" id="myModalVital" style="margin-top:50px">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Vital Sign</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="form-group">Patient Name</label>
+                        <input class="form-control" type="text" id="Pname" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-group">Height</label>
+                        <input class="form-control" type="text" id="height" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-group">Weight</label>
+                        <input class="form-control" type="text" id="weight" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-group">Temperature</label>
+                        <input class="form-control" type="text" id="temp" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-group">Blood Sugar</label>
+                        <input class="form-control" type="text" id="bs" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-group">Upper Blood</label>
+                        <input class="form-control" type="text" id="ub" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-group">Lower Blood</label>
+                        <input class="form-control" type="text" id="lb" />
+                    </div>
+
+                </form>
+
+
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section SCripts{
+    <script>
+          $(document).ready(function () {
+            $('#myTable').DataTable(
+            );
+          });
+
+        function clickVital(e, pId) {
+           
+            $.ajax({
+                type: 'GET',
+                url: '/api/DoctorTreatment/getVitalByPatient/' + pId,
+                success: function (result) {
+                    var clist = result;
+                    $.each(clist, function (e, value) {
+                        $("#Pname").val(value.patient.name);
+                        $("#height").val(value.height);
+                        $("#weight").val(value.weight);
+                        $("#temp").val(value.temperature);
+                        $("#bs").val(value.bloodSugar);
+                        $("#ub").val(value.bloodPressureUNo);
+                        $("#lb").val(value.bloodPressureLNo);
+
+                    });
+                }
+            });
+
+        }
+    </script>
+
+}

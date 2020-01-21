@@ -1,26 +1,26 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @model IEnumerable<ClinicSystem.Models.DrugSell>
 
 @{
     ViewData["Title"] = "DrugSell";
 }
 
-<h1>Drug Sell</h1>
+<h3>Drug Sell</h3>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
-<table class="table">
+<table class="table" id="myTable">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.PatientName)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Qty)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Total_Price)
             </th>
@@ -35,9 +35,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.PatientName)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.Qty)
-                </td>
+                </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Total_Price)
                 </td>
@@ -52,9 +52,9 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class="btn btn-success" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }
@@ -64,6 +64,12 @@
     <script>
         $(document).ready(function () {
             $("#classList7").addClass("active");
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable(
+ );
         });
     </script>
 }

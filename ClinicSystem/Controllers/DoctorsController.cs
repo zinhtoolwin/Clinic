@@ -22,14 +22,10 @@ namespace ClinicSystem.Controllers
         }
 
         // GET: Doctors
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index()
         {
-            var doctor =_context.Doctors.Include(s => s.Speciality);
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                doctor = doctor.Where(s => s.Name.Contains(searchString)).Include(a=>a.Speciality);
-            }
-            return View(await doctor.ToListAsync());
+            var applicationDbContext = _context.Doctors.Include(d => d.Speciality).Include(d => d.User);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Doctors/Details/5
@@ -42,6 +38,7 @@ namespace ClinicSystem.Controllers
 
             var doctor = await _context.Doctors
                 .Include(d => d.Speciality)
+                .Include(d => d.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (doctor == null)
             {
@@ -55,6 +52,7 @@ namespace ClinicSystem.Controllers
         public IActionResult Create()
         {
             ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Name");
+            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "UserName");
             return View();
         }
 
@@ -63,7 +61,7 @@ namespace ClinicSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,SpecialityID,Age,DoctorNRC,NRC,Gender,FromDate,ToDate,Email,PhoneNo")] Doctor doctor)
+        public async Task<IActionResult> Create([Bind("Id,Name,SpecialityID,Age,DoctorNRC,NRC,Gender,FromDate,ToDate,Email,PhoneNo,UserId")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +69,8 @@ namespace ClinicSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Name", doctor.SpecialityID);
+            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Id", doctor.SpecialityID);
+            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", doctor.UserId);
             return View(doctor);
         }
 
@@ -88,7 +87,8 @@ namespace ClinicSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Name", doctor.SpecialityID);
+            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Id", doctor.SpecialityID);
+            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", doctor.UserId);
             return View(doctor);
         }
 
@@ -97,7 +97,7 @@ namespace ClinicSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,SpecialityID,Age,DoctorNRC,NRC,Gender,FromDate,ToDate,Email,PhoneNo")] Doctor doctor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,SpecialityID,Age,DoctorNRC,NRC,Gender,FromDate,ToDate,Email,PhoneNo,UserId")] Doctor doctor)
         {
             if (id != doctor.Id)
             {
@@ -124,7 +124,8 @@ namespace ClinicSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Name", doctor.SpecialityID);
+            ViewData["SpecialityID"] = new SelectList(_context.Specialities, "Id", "Id", doctor.SpecialityID);
+            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", doctor.UserId);
             return View(doctor);
         }
 
@@ -138,6 +139,7 @@ namespace ClinicSystem.Controllers
 
             var doctor = await _context.Doctors
                 .Include(d => d.Speciality)
+                .Include(d => d.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (doctor == null)
             {

@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,16 +20,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>
-        @ViewData["Title"]-Argon Dashboard - Free Dashboard for Bootstrap 4 by Creative Tim
+       Medical Home
     </title>
 
 
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-
-
-
 
 
     <link rel="stylesheet" href="~/assets/css/style.css" />
@@ -60,9 +56,7 @@
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                       
                     </button>
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/assets/images/medicalhome.png" alt="image" style="height:50px;width:90px"></a>
                 </div>
@@ -70,7 +64,7 @@
                     <ul class="nav navbar-nav">
                         <li id="classList1">
                             <a class=" nav-link" asp-area="" asp-controller="Specialities" asp-action="Index" style="text-align:center">
-                                <i class="ni ni-tv-2 text-blue " ></i> Speciality
+                                <i class="ni ni-tv-2 text-blue "></i> Speciality
                             </a>
                         </li>
                         <li id="classList2">
@@ -80,7 +74,7 @@
                         </li>
                         <li id="classList3">
                             <a class="nav-link " asp-area="" asp-controller="Schedules" asp-action="Index" style="text-align:center">
-                                <i class="ni ni-planet text-blue"></i>  Appointment
+                                <i class="ni ni-planet text-blue"></i>  Schedule
                             </a>
                         </li>
                         <li id="classList4">
@@ -109,20 +103,51 @@
                                 <i class="ni ni-bullet-list-67 text-red"></i> Vital Sign
                             </a>
                         </li>
-                        <li id="classList9">
-                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="DoctorWorkbench">
-                                <i class="ni ni-bullet-list-67 text-red"></i> Doctor's Workbench
+                        @if (User.IsInRole("Admin") || User.IsInRole("Doctor"))
+                        {
+
+                            <li id="classList9">
+                                <a class="nav-link " asp-area="" asp-controller="DoctorWB" asp-action="Index">
+                                    <i class="ni ni-bullet-list-67 text-red"></i> Doctor's Workbench
+                                </a>
+                            </li>
+                        }
+
+                        @*
+
+        <li id="classList9">
+            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="DoctorWorkbench">
+                <i class="ni ni-bullet-list-67 text-red"></i> Doctor's Workbench
+            </a>
+        </li>
+                        *@
+
+
+                        <li class="nav-item dropdown has-submenu">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="text-align:center">Orders</a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown05">
+                                <li> <a class="dropdown-item" asp-area="" asp-controller="Orders" asp-action="Index" style="text-align:center">Doctor Orders</a></li>
+                                <li> <a class="dropdown-item" asp-area="" asp-controller="ConfirmOrder" asp-action="Index" style="text-align:center">Pending Orders</a></li>
+                                <li> <a class="dropdown-item" asp-area="" asp-controller="ConfirmOrder" asp-action="ConOrder" style="text-align:center">Confirmed Orders</a></li>
+                            </ul>
+                        </li>
+                        <li >
+                            <a class="nav-link " asp-area="" asp-controller="Billings" asp-action="Index">
+                                <i class="ni ni-bullet-list-67 text-red"></i> Billing
                             </a>
                         </li>
 
                     </ul>
-                  
+                    
+
                 </div>
                 <div class="container">
                     <ul class="nav navbar-nav navbar-right">
                         @if (SignInManager.IsSignedIn(User))
                         {
-
+                            <li class="nav-item">
+                                <a class="btn-light btn-radius btn-brd log" asp-area="Identity" asp-page="/Account/Register">Create User</a>
+                            </li>
                             <li class="nav-item float-right">
                                 <a class="btn-light btn-radius btn-brd log" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name</a>
                             </li>
@@ -137,7 +162,7 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="btn-light btn-radius btn-brd log" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                <a class="btn-light btn-radius btn-brd log" asp-area="Identity" asp-page="/Account/Register">Create User</a>
                             </li>
                             <li class="nav-item">
                                 <a class="btn-light btn-radius btn-brd log" asp-area="Identity" asp-page="/Account/Login"><i class="flaticon-padlock"></i> Login</a>
@@ -177,9 +202,9 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>*@
 
 
     @RenderSection("Scripts", required: false)

@@ -1,0 +1,106 @@
+﻿@model ClinicSystem.Models.DrugOrderViewModel
+@{
+    ViewData["Title"] = "Confirm_Order";
+}
+
+<h3>Confirm Order</h3>
+
+
+
+        <div class="container">
+
+            <div class="col-sm-12">
+                <div class="card col-sm-6">
+                    <div asp-for="" class="card-body">
+                        <label asp-for="Doctor.Name" class="control-label"></label>
+                        <input readonly asp-for="Doctor.Name" class="form-control" />
+                        <span asp-validation-for="Doctor.Name" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="card col-sm-6">
+                    <div asp-for="" class="card-body">
+                        <label asp-for="Patient.Name" class="control-label"></label>
+                        <input readonly asp-for="Patient.Name" class="form-control" />
+                        <span asp-validation-for="Patient.Name" class="text-danger"></span>
+                    </div>
+                    <br>
+                </div>
+              
+                <div class="col-sm-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Drug Name
+                                </th>
+                                <th>
+                                    Price
+                                </th>
+                                <th>Quantity</th>
+                                <th>Frequency</th>
+                                <th>Total Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                for (int i = 0; i < Model.DrugOrderList.Count; i++)
+                                {
+
+
+                                    <tr>
+
+                                        <td>
+
+                                            <label id="a@(Model.DrugOrderList[i].DrugIdd)">@Model.DrugOrderList[i].DrugName </label>
+
+
+                                            <input type="hidden" asp-for="DrugOrderList[i].DrugName" />
+
+                                        </td>
+                                        <td> <label id="p@(Model.DrugOrderList[i].DrugIdd)">@Model.DrugOrderList[i].Price</label></td>
+                                        <td>
+                                            <label id="q@(Model.DrugOrderList[i].DrugIdd)">@Model.DrugOrderList[i].Qty</label>
+                                        </td>
+                                        <td>
+                                            <label id="f@(Model.DrugOrderList[i].DrugIdd)">@Model.DrugOrderList[i].Frequency</label>
+                                        </td>
+                                        <td>
+                                            <label id="t@(Model.DrugOrderList[i].DrugIdd)">@Model.DrugOrderList[i].Total_Amt</label>
+                                        </td>
+                                    </tr>
+
+
+                                }
+                            }
+                        </tbody>
+
+
+                    </table>
+                </div>
+                <div class="container">
+                    <a class="btn btn-primary" onclick="ConfirmOrder(@Model.Id);">Confirm Order</a>
+                </div>
+            </div>
+
+        </div>
+
+
+@section Scripts{
+
+    <script>
+        function ConfirmOrder(Id) {
+
+            $.ajax({
+                type: "POST",
+                url: "/api/Orders1/" + Id,
+                success: function (result) {
+                    var clist = result;
+                   
+                    window.location.assign("http://localhost:60425/ConfirmOrder")
+                }
+            });
+
+        }
+    </script>
+}

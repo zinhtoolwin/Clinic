@@ -12,10 +12,8 @@ namespace ClinicSystem.Models
         public int Id { get; set; }
         public string PatientName { get; set; }
         public int Total_Amt { get; set; }
-        //public int Frequency { get; set; }
-        //public int NoofDay { get; set; }
-       // public int Qty { get; set; }
-       
+
+       public int Qty { get; set; }
 
         public List<DrugSellDrugViewModel> DrugSellList { get; set; }
         public List<DrugViewModel> DrugItemList { get; set; }

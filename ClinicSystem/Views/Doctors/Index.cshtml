@@ -1,28 +1,17 @@
 ﻿@model IEnumerable<ClinicSystem.Models.Doctor>
 
 @{
-    ViewData["Title"] = "Doctor";
+    ViewData["Title"] = "Index";
 }
 
-<h3 class="text-green">Doctor List</h3>
-<hr />
+<h3>Doctor List</h3>
 
 <p>
-    <a class="btn btn-primary" asp-action="Create">Create New Doctor</a>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
-<form class="form-inline" asp-controller="Doctors" asp-action="Index">
-        <p>
-             Doctor Name:<input type="text" class="form-control" name="searchString" size="15" />
-             <input type="submit" class="btn btn-primary" value="Search" />
-        </p>
-
-</form>
-<table class="table">
+<table class="table" id="myTable">
     <thead>
         <tr>
-            <th>
-                No
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -36,33 +25,17 @@
                 @Html.DisplayNameFor(model => model.DoctorNRC)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NRC)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.FromDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ToDate)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.PhoneNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.UserName)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @{int row = 0;}
-    @foreach (var item in Model) {
+@foreach (var item in Model) {
         <tr>
-            <td>
-                @(row += 1)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -76,22 +49,10 @@
                 @Html.DisplayFor(modelItem => item.DoctorNRC)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NRC)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.FromDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ToDate)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.PhoneNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
             </td>
             <td>
                 <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -102,12 +63,12 @@
 }
     </tbody>
 </table>
-
 @section Scripts{
-    <script>
-        $(document).ready(function () {
-            $("#classList2").addClass("active");
-        });
-    </script>
-}
 
+    <script>
+         $(document).ready(function () {
+            $('#myTable').DataTable(
+            );
+          });
+    </script>
+ }

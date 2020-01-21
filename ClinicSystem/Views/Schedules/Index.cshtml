@@ -4,18 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-    <h3>Schedule List</h3>
+<h3>Schedule List</h3>
 
 <p>
     <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
-<form class="form-inline" asp-controller="Schedules" asp-action="Index">
-    <p>
-        Day Part:<input type="text" class="form-control" name="searchString" />
-        <input type="submit" class="btn btn-primary" value="Search Day" />
-    </p>
-</form>
-<table class="table">
+
+<table class="table" id="myTable">
     <thead>
         <tr>
             <th>
@@ -62,6 +57,12 @@
     <script>
         $(document).ready(function () {
             $("#classList3").addClass("active");
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable(
+            );
         });
     </script>
 }

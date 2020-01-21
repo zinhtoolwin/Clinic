@@ -69,7 +69,7 @@ namespace ClinicSystem.Controllers
                 DrugSellList = scList,
                 DrugItemList = drgList
 
-                //new List<DrugViewModel>()
+              
             };
             ViewData["DrugPrice"] = new SelectList(_context.Drugs, "Id", "Price");
             return View(std);
@@ -85,21 +85,11 @@ namespace ClinicSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                /*IList<DrugSellViewModel> newDrugsSells = new List<DrugSellViewModel>()
-                {
-                    new DrugSellViewModel(){PatientName=drug.PatientName, Qty=drug.Qty , Total_Price=drug.Total_Price ,Total_Amt=drug.Total_Amt}
-                };
-                IList<DrugViewModel> newDrugvm = new List<DrugViewModel>()
-                {
-                   
-                };
-
-                */
-
                 var std = new DrugSell()
                 {
                     PatientName = drug.PatientName,
                     Total_Price = drug.Total_Amt,
+                    Qty = drug.Qty
                     
                     
                 };
@@ -120,17 +110,6 @@ namespace ClinicSystem.Controllers
                 _context.AddRange(drugsellList);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-
-                //foreach (DrugSellDrugViewModel cv in drug.DrugSellList)
-                //{
-                //    if (cv.IsChecked == true)
-                //        drugsellList.Add(new DrugSellDrug() { DrugsellId = std.Id, DrugId = cv.DrugId });
-                //}
-
-                // _context.DrugSellDrugs.AddRange(drugsellList);
-                //await _context.SaveChangesAsync();
-              
-
                
             }
             return View(drug);

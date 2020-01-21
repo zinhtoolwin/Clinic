@@ -1,0 +1,199 @@
+﻿@model ClinicSystem.Models.DrugOrderViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h3>Drug Order</h3>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PatientId" class="control-label"></label>
+                <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="Patient.Name" class="control-label"></label>
+                <input readonly asp-for="Patient.Name" class="form-control" />
+
+            </div>*@
+            @*<div class="form-group">
+            <label asp-for="Doctor.Name" class="control-label"></label>
+            <input readonly asp-for="Doctor.Name" class="form-control" />
+
+        </div>*@
+
+            <div class="form-group">
+                <label asp-for="DoctorId" class="control-label"></label>
+                <select asp-for="DoctorId" class="form-control" asp-items="ViewBag.DoctorId"></select>
+            </div>
+
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsBillCleared" /> @Html.DisplayNameFor(model => model.IsBillCleared)
+                </label>
+            </div>
+            <fieldset class="form-group">
+                <h5>Drugs</h5>
+                <table id="drugSellTable" class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @{
+                            for (int i = 0; i < Model.DrugOrderList.Count; i++)
+                            {
+                                <tr>
+
+                                    <td>
+
+                                        <label id="a@(Model.DrugOrderList[i].DrugIdd)">@Model.DrugOrderList[i].DrugName </label>
+
+
+                                        <input type="hidden" asp-for="DrugOrderList[i].DrugName" />
+
+                                    </td>
+                                    <td> <label id="p@(Model.DrugOrderList[i].DrugIdd)">@Model.DrugOrderList[i].Price</label></td>
+                                    <td>
+                                        <input type="button" id="test" class="btn btn-primary" value="Add" data-target="#myTable" onclick="selectDrug('@Model.DrugOrderList[i].DrugIdd')" />
+                                    </td>
+                                </tr>
+
+                            }
+                        }
+
+
+                    </tbody>
+                </table>
+                <div class="form-check-inline">
+
+
+
+                </div>
+                <table id="myTableee" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td>Drug Name</td>
+                            <td>Qty</td>
+                            <td>Frequency</td>
+                            <td>Total Qty</td>
+
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+            </fieldset>
+
+
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+
+            $('#drugSellTable').DataTable({
+                "aLengthMenu": [[5, 50, 75, -1], [5, 50, 75, "All"]],
+                "pageLength": 5
+            });
+        });
+
+
+
+        var id = document.getElementById("#test");
+        var aa = document.getElementsByName(".btn btn-primary");
+        var count = 0;
+
+        function selectDrug(id) {
+
+            //alert(id);
+            var b = "a" + id;
+            //alert(b);
+            var d = "d" + id;
+
+
+            var drug = $("#a" + id).text();
+            var price = $("#p" + id).text();
+
+            var price = $("#p" + id).text();
+
+            var qty = $('#in' + id).text();
+            var freq = $('#fre' + id).text();
+           
+           // var toTable = "<tr id='test" + id + "'><td>" + drug + "<input type='hidden' name='DrugItemList[" + count + "].DrugIdd' value='" + id + "' /></td><input type='hidden' name='DrugItemList["+count+"].OrderId'value='"+id+"''/><td id='p" + id + "'>" + price + "<input type='hidden' name='DrugItemList[" + count + "].Price' value='" + price + "' /></td><td>" + "<input  value='0'  name='DrugItemList[" + count + "].Qty' id='in" + id + "'/><input type='hidden' value='" + id + "' />" + "</td><td><input onkeyup='displaytotal(this)'  class'Frequency' name'DrugItemList["+count+"].Frequency' id='freq"+id+"'/><input type='hidden' value='" + id + "' />"+"</td><td>" + "<input class='mad' name='DrugItemList[" + count + "].Frequency' id='tot" + id + "'/> " + "</td><td><input type='button' data-target='#myTable' value='Delete' id=" + d + " onclick='deleterow(this)' class='btn btn-danger' />" + "</td></tr>"
+            var toTable1 = "<tr id='test" + id + "'><td>" + drug + "<input type='hidden' name='DrugItemList["+count+"].DrugIdd' value='" + id + "'/></td><td><input  value='0'  name='DrugItemList[" + count + "].Qty' id='in" + id + "'/></td><td><input onkeyup='displaytotal(this)'  value='0'  name='DrugItemList[" + count + "].Frequency' id='fre" + id + "'/><input type='hidden' value='" + id + "' /></td><td><input   value='0'  name='DrugItemList[" + count + "].Total_Qty' id='tot" + id + "'/></td><td><input type='button' data-target='#myTable' value='Delete' id=" + d + " onclick='deleterow(this)' class='btn btn-danger' /></td><tr>"
+             $("#myTableee").append(toTable1);
+            count++;
+
+
+        }
+        function deleterow(e) {
+            $(e).parent().parent().remove();
+
+        }
+        // var totalamt = $("#tot" + count).val();
+        function displaytotal(e) {
+
+
+            var frequency = $(e).val();
+            
+          
+
+            //To get ID
+            var id = $(e).siblings()[0];
+            
+
+            var mid = $(id).val();
+            
+           
+            var qty = $("#in" + mid).val();
+          
+            var price = $("#p" + mid).text();
+            $("#tot" + mid).val((parseFloat(frequency) * parseFloat(qty)));
+
+
+
+
+
+
+           
+
+
+
+
+        }
+
+
+
+
+
+
+    </script>
+
+
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

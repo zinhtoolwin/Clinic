@@ -5,19 +5,14 @@
 }
 
 <h3 class="text-green">Specialities List</h3>
-<hr />
+
 
 <p>
     <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
 
-<form class="form-inline" asp-controller="Specialities" asp-action="Index">
-    <p>
-        Speciality:<input type="text" class="form-control" name="searchString" size="15"/>
-        <input type="submit" class="btn btn-primary" value="Search" />
-    </p>
-</form>
-<table class="table table-hover">
+
+<table class="table table-hover" id="myTable">
     <thead>
         <tr>
             <th>
@@ -33,9 +28,9 @@
     <tbody>
         @foreach (var item in Model)
         {
-           <tr>
+            <tr>
                 <td>
-                   @(row+=1)
+                    @(row += 1)
                 </td>
                 <td>
                     @Html.DisplayFor(model => item.Name)
@@ -46,10 +41,10 @@
                     <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
-            
 
 
-          }
+
+        }
 
 
     </tbody>
@@ -58,6 +53,12 @@
     <script>
         $(document).ready(function () {
             $("#classList1").addClass("active");
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable(
+            );
         });
     </script>
 

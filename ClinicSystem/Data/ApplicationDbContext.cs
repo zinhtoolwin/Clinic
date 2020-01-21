@@ -46,6 +46,8 @@ namespace ClinicSystem.Data
 
             builder.Entity<DrugSellDrug>()
                 .HasKey(sc => new { sc.DrugId, sc.DrugsellId });
+            //builder.Entity<DrugOrder>()
+             //   .HasKey(a => new { a.DrugId, a.OrderId });
                 
 
 
@@ -63,5 +65,9 @@ namespace ClinicSystem.Data
         public DbSet<Schedule> Schedules { get; set; }
 
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<DrugOrder> DrugOrders { get; set; }
+        public DbSet<Order> Order { get; set; }
+        public DbSet<Billing> Billings { get; set; }
+        
     }
 }
