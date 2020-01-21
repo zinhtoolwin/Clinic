@@ -56,6 +56,13 @@ namespace ClinicSystem.Controllers
             return list;
         }
 
+        [HttpGet("getDrugsTableByPatientId/{PaId}")]
+        public IEnumerable<DoctorOrderDrug> GetDrugsTableByPatientId(int PaId)
+        {
+            var list = _context.DoctorOrderDrugs.Include(b=>b.DoctorOrder).ThenInclude(t=>t.Patient).Include(e=>e.DoctorOrder).ThenInclude(i=>i.Doctor).Include(a=>a.Drug).Where(c=>c.DoctorOrder.PatientId==PaId);
+            return list;
+        }
+
 
     }
 }

@@ -34,6 +34,8 @@ namespace ClinicSystem.Models
 
         public ICollection<Schedule> Schedules { get; set; }
 
+        public ICollection<DoctorOrder> DoctorOrders { get; set; }
+
       
 
     }
