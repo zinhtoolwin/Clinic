@@ -22,5 +22,6 @@ namespace ClinicSystem
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+        //asdfsdfasdfasdfasfd
     }
 }
